@@ -23,12 +23,12 @@ class CreateAchatsTable extends Migration
             $table->string('numCmd')->nullable();
             $table->double('qtt')->unsigned()->nullable();
             $table->integer('seuil')->unsigned()->nullable();
-            $table->double('mntpayer')->unsigned()->nullable();
+            $table->double('mntpayer')->unsigned()->nullable();  // montant payer
             $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat
             $table->double('sellingPrice')->unsigned()->nullable(); // prix de vente
-            $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase');
-            $table->double('mntTotalVent')->storedAs('qtt * sellingPrice');
-            $table->double('dette')->storedAs('mntTotalAchat - mntpayer');
+            $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase'); //prix total d'achats
+            $table->double('mntTotalVent')->storedAs('qtt * sellingPrice'); // prix total de vente
+            $table->double('dette')->storedAs('mntTotalAchat - mntpayer'); // montant total qui reste a payer
             $table->double('montantPaye')->unsigned()->nullable();
             $table->foreignId('fournisseur_id')
                 ->nullable()
