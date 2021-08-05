@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVentesTable extends Migration
+class CreateAchatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,29 @@ class CreateVentesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventes', function (Blueprint $table) {
+        Schema::create('achats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('produit_id')
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('factureNum')->nullable();
+            $table->string('numCmd')->nullable();
             $table->double('qtt')->unsigned()->nullable();
-            $table->double('pu')->unsigned()->nullable();
-            $table->double('payer')->unsigned()->nullable();
-            $table->double('mttPayer')->storedAs('qtt * pu');
-            $table->double('restePayer')->storedAs('mttPayer - payer');
-            $table->foreignId('client_id')
+            $table->integer('seuil')->unsigned()->nullable();
+            $table->double('mntpayer')->unsigned()->nullable();
+            $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat
+            $table->double('sellingPrice')->unsigned()->nullable(); // prix de vente
+            $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase');
+            $table->double('mntTotalVent')->storedAs('qtt * sellingPrice');
+            $table->double('dette')->storedAs('mntTotalAchat - mntpayer');
+            $table->double('montantPaye')->unsigned()->nullable();
+            $table->foreignId('fournisseur_id')
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('facture_id')
+            $table->integer('commande_id')
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
@@ -41,7 +45,9 @@ class CreateVentesTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->date('dateVente')->nullable();
+            $table->date('dateFab')->nullable();
+            $table->date('dateExp')->nullable();
+            $table->date('dateCmd')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('archived')->default(false);
@@ -55,6 +61,6 @@ class CreateVentesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventes');
+        Schema::dropIfExists('achats');
     }
 }

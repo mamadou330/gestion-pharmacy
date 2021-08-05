@@ -15,7 +15,22 @@ class CreateDepensesTable extends Migration
     {
         Schema::create('depenses', function (Blueprint $table) {
             $table->id();
+            $table->string('description')->nullable();
+            $table->double('montant')->unsigned();
+            $table->integer('motif')->unsigned();
+            $table->foreignId('motif_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');;
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
+            $table->boolean('archived')->default(false);
         });
     }
 
