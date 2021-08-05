@@ -5,29 +5,80 @@
         <p>Home</p>
     </a>
 </li>
-<li class="nav-item menu-open">
+<li class="nav-item">
     <a href="{{ route('welcome')}}" class="nav-link {{ page_active('welcome')}}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>Tableau de bord<i class="right fas fa-angle-left"></i></p>
     </a>
 
-    <ul class="nav nav-treeview ">
+    <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="./index.html" class="nav-link active">
+            <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Dashboard v1</p>
             </a>
         </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Commande<i class="right fas fa-angle-left"></i></p>
+    </a>
+
+    <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="./index2.html" class="nav-link">
+            <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v2</p>
+                <p>Nouvelle Commande</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="./index3.html" class="nav-link">
+            <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v3</p>
+                <p>Toutes les commandes</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link ">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Produits<i class="right fas fa-angle-left"></i></p>
+    </a>
+
+    <ul class="nav nav-treeview ">
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Ajouter un produit</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Stocks</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Fournisseurs<i class="right fas fa-angle-left"></i></p>
+    </a>
+
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="#" class="nav-link active">
+                <i class="fas fa-fw fa-user nav-icon"></i>
+                <p>Nouveau fournisseur</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tous les fournisseurs</p>
             </a>
         </li>
     </ul>
