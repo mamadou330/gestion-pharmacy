@@ -27,7 +27,7 @@ class CreateAchatsTable extends Migration
             $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat
             $table->double('sellingPrice')->unsigned()->nullable(); // prix de vente
             $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase'); //prix total d'achats
-            $table->double('mntTotalVent')->storedAs('qtt * sellingPrice'); // prix total de vente
+            $table->double('mntTotalVente')->storedAs('qtt * sellingPrice'); // prix total de vente
             $table->double('dette')->storedAs('mntTotalAchat - mntpayer'); // montant total qui reste a payer
             $table->double('montantPaye')->unsigned()->nullable();
             $table->foreignId('fournisseur_id')

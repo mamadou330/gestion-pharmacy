@@ -20,12 +20,12 @@ class CreateVentesTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('factureNum')->nullable();
+            $table->string('factName')->nullable();
             $table->double('qtt')->unsigned()->nullable();
             $table->double('pu')->unsigned()->nullable();
-            $table->double('payer')->unsigned()->nullable();
-            $table->double('mttPayer')->storedAs('qtt * pu');
-            $table->double('restePayer')->storedAs('mttPayer - payer');
+            $table->double('mttPayer')->unsigned()->nullable();
+            $table->double('mtt')->storedAs('qtt * pu');
+            $table->double('restePayer')->storedAs('mtt - mttPayer');
             $table->foreignId('client_id')
                 ->nullable()
                 ->constrained()
