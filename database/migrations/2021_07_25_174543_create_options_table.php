@@ -22,8 +22,16 @@ class CreateOptionsTable extends Migration
             $table->boolean('creditFournisseur')->default(false);
             $table->boolean('versemClient')->default(false);
             $table->boolean('creditClient')->default(false);
-            $table->integer('client_id')->nullable();
-            $table->integer('fournisseur_id')->nullable();
+            $table->foreignId('fournisseur_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('client_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()

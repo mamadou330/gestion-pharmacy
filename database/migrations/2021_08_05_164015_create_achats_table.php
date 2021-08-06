@@ -20,26 +20,19 @@ class CreateAchatsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('numCmd')->nullable();
+            $table->foreignId('commande_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->double('qtt')->unsigned()->nullable();
             $table->integer('seuil')->unsigned()->nullable();
-            $table->double('mntpayer')->unsigned()->nullable();  // montant payer
             $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat
             $table->double('sellingPrice')->unsigned()->nullable(); // prix de vente
+            $table->double('montantPaye')->unsigned()->nullable();  // montant payer
             $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase'); //prix total d'achats
             $table->double('mntTotalVente')->storedAs('qtt * sellingPrice'); // prix total de vente
-            $table->double('dette')->storedAs('mntTotalAchat - mntpayer'); // montant total qui reste a payer
-            $table->double('montantPaye')->unsigned()->nullable();
-            $table->foreignId('fournisseur_id')
-                ->nullable()
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->integer('commande_id')
-                ->nullable()
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->double('dette')->storedAs('mntTotalAchat - montantPaye'); // montant total qui reste a payer
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
@@ -47,7 +40,6 @@ class CreateAchatsTable extends Migration
                 ->onDelete('cascade');
             $table->date('dateFab')->nullable();
             $table->date('dateExp')->nullable();
-            $table->date('dateCmd')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('archived')->default(false);

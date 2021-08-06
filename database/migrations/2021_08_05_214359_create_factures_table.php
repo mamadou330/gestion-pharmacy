@@ -16,7 +16,11 @@ class CreateFacturesTable extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->string('factName');
-            $table->date('dateVente')->nullable();
+            $table->foreignId('client_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
