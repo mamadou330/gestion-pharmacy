@@ -78,8 +78,8 @@ h1 {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     color: white;
-    font-size: 25px;
-    font-weight: 600
+    font-size: 22px;
+    font-weight: 700
 }
 @-webkit-keyframes iC{
     from{

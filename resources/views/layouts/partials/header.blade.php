@@ -3,7 +3,7 @@
 <head>
     {{-- Base Meta Tags --}}
     <meta charset="UTF-8">
-    <title>{{ page_title($title) }}</title>
+    <title>{{ page_title($title ?? '')}}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="author" content="mamadou_saliou_bah" />
@@ -14,8 +14,8 @@
         crossorigin="anonymous"/>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
-    {{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
+     {{-- <link rel="stylesheet" href="{{asset('css/normalize.css')}}">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}"> --}}
 
     {{-- //tiers_parties_stylesheets => fichier css qui doivent etre inclus de facons globale --}}
     {{-- @yield('third_party_stylesheets')  --}}
@@ -25,6 +25,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
+    {{-- <link href="{{ asset('css/pe-icon-7-stroke.css') }}" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')}}">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
@@ -45,13 +46,13 @@
        <link rel="stylesheet" href="{{ asset('css/styles.css')}}"> 
     @endonce
     {{-- fichier css => qui doivent etre inclus seulent sur certaines pages --}}
-    {{-- @stack('page_css') --}}
+    @stack('page_css')
 
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
+    {{-- <div class="preloader flex-column justify-content-center align-items-center">
       <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div>
+    </div> --}}

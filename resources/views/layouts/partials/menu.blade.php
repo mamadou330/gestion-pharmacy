@@ -22,8 +22,8 @@
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>Commande<i class="right fas fa-angle-left"></i></p>
+        <i class="nav-icon fas fa-ship"></i>
+        <p>Commandes<i class="right fas fa-angle-left px-2"></i></p>
     </a>
 
     <ul class="nav nav-treeview">
@@ -51,6 +51,7 @@
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
+                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
                 <p>Ajouter un produit</p>
             </a>
         </li>
@@ -64,13 +65,13 @@
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <i class="nav-icon fas fa-fw fa-user "></i>
         <p>Fournisseurs<i class="right fas fa-angle-left"></i></p>
     </a>
 
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="{{ route('fournisseur.index')}}" class="nav-link active">
                 <i class="fas fa-fw fa-user nav-icon"></i>
                 <p>Nouveau fournisseur</p>
             </a>

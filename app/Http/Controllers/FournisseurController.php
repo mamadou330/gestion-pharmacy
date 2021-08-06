@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class FournisseurController extends Controller
 {
@@ -14,7 +15,7 @@ class FournisseurController extends Controller
      */
     public function index()
     {
-        //
+        return view('components.fournisseur');
     }
 
     /**
@@ -35,7 +36,14 @@ class FournisseurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            // 'address' => 'required|string|min:3|max:255',
+            // 'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
+            // 'email' => 'required|email|string|min:3|max:255'
+        ]);
+
+        dd('Success');
     }
 
     /**
