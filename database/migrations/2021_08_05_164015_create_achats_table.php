@@ -25,6 +25,16 @@ class CreateAchatsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('categorie_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('famille_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->double('qtt')->unsigned()->nullable();
             $table->integer('seuil')->unsigned()->nullable();
             $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat
@@ -32,7 +42,7 @@ class CreateAchatsTable extends Migration
             $table->double('montantPaye')->unsigned()->nullable();  // montant payer
             $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase'); //prix total d'achats
             $table->double('mntTotalVente')->storedAs('qtt * sellingPrice'); // prix total de vente
-            $table->double('dette')->storedAs('mntTotalAchat - montantPaye'); // montant total qui reste a payer
+            $table->double('restePayer')->storedAs('mntTotalAchat - montantPaye'); // montant total qui reste a payer
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
