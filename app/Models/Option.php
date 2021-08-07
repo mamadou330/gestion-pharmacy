@@ -12,6 +12,7 @@ class Option extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['name', 'unite', 'user_id'];
     
     /**
      * produits

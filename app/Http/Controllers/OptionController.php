@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OptionController extends Controller
 {
@@ -35,7 +36,16 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:2|max:255'
+        ]);
+
+        Option::firstOrcreate(
+            ['name' => $request->name],
+            ['unite' => true]
+        );
+
+        return back();
     }
 
     /**
