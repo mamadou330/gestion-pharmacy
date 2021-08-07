@@ -12,6 +12,7 @@ class Fournisseur extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['name', 'address', 'phone', 'email', 'user_id'];
     
     /**
      * commandes

@@ -38,12 +38,21 @@ class FournisseurController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:3|max:255',
-            // 'address' => 'required|string|min:3|max:255',
-            // 'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
-            // 'email' => 'required|email|string|min:3|max:255'
+            'address' => 'string|min:3|max:255',
+            'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
+            'email' => 'email|string|min:3|max:255'
         ]);
 
-        dd('Success');
+        Fournisseur::firstOrcreate(
+            [
+                'name' => $request->name, 
+                'phone' => $request->phone,
+            ],
+            [
+                'address' => $request->address,
+                'email' => $request->email
+            ]
+        );
     }
 
     /**
