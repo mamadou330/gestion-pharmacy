@@ -17,14 +17,8 @@ class CreateProduitsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->nullable();
-            $table->boolean('inventaire')->default(false);
+            $table->text('description')->nullable();
             $table->string('avatar')->nullable();
-            $table->text('description');
-            $table->foreignId('unite_id')
-                ->nullable()
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()

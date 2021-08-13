@@ -1,7 +1,6 @@
 @extends('layouts.app', ['title' => 'Welcome'])
 
 @section('content')
-    <h1>Hello Mamadou </h1>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

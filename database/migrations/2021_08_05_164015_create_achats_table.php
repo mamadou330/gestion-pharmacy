@@ -35,6 +35,12 @@ class CreateAchatsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('unite_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('inventaire')->default(false);
             $table->double('qtt')->unsigned()->nullable();
             $table->integer('seuil')->unsigned()->nullable();
             $table->double('priceOfPurchase')->unsigned()->nullable(); // prix d'achat

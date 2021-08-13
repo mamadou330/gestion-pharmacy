@@ -44,15 +44,11 @@ class FournisseurController extends Controller
         ]);
 
         Fournisseur::firstOrcreate(
-            [
-                'name' => $request->name, 
-                'phone' => $request->phone,
-            ],
-            [
-                'address' => $request->address,
-                'email' => $request->email
-            ]
+            ['name' => $request->name, 'phone' => $request->phone],
+            ['address' => $request->address,'email' => $request->email]
         );
+
+        return back();
     }
 
     /**

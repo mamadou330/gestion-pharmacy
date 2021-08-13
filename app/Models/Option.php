@@ -14,14 +14,15 @@ class Option extends Model
 
     protected $fillable = ['name', 'unite', 'user_id'];
     
+    
     /**
-     * produits
+     * achats
      *
      * @return HasMany
      */
-    public function produits(): HasMany
+    public function achats(): HasMany
     {
-        return $this->hasMany(Produit::class);
+        return $this->hasMany(Achat::class);
     }
     
     /**

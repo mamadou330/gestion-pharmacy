@@ -79,14 +79,14 @@
 
     <!-- Small modal -->
     
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fournisseurModal" data-whatever="@fat"><i class="fa fa-user mx-1"></i> Fournisseurs</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fournisseurModal" data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
     <div class="modal fade" id="fournisseurModal" tabindex="-1" aria-labelledby="fournisseurModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <form action="{{ route('fournisseur.store')}}" method="POST">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title justify-content-beetween" id="fournisseurModalLabel"><i class="ml-2 fas fa-user"></i><span class="badge badge-pill badge-info text-center mx-3 p-2">Ajouter un fournisseur </span></h5>
+                        <h5 class="modal-title justify-content-beetween" id="fournisseurModalLabel"><i class="ml-2 fas fa-users"></i><span class="badge badge-pill badge-info text-center mx-2 p-2">Ajouter un fournisseur </span></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>

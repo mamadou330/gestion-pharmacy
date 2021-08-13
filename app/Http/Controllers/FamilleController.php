@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Famille;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FamilleController extends Controller
 {
@@ -35,7 +36,16 @@ class FamilleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'famille' => 'required|string|min:3|max:255'
+        ]);
+
+        Famille::firstOrCreate(
+            ['familleName' => $request->famille],
+            // ['user_id' => Auth::user()->id ]
+        );
+
+        return back();
     }
 
     /**

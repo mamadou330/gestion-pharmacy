@@ -33,7 +33,7 @@ return [
       *La valeur par défaut est null, qui utilise la méthode toString() sur votre modèle.
      */
 
-    'source' => null,
+    'source' => 'name',
 
     /**
      * The maximum length of a generated slug.  Defaults to "null", which means
@@ -62,7 +62,8 @@ return [
      * 
      * 
      * 
-     * Si vous définissez une longueur maximale sur vos slugs, vous ne voudrez peut-être pas que la
+     * Si vous définissez une longueur maximale sur vos slugs,
+     *  vous ne voudrez peut-être pas que la
      * chaîne tronquée pour diviser un mot en deux. Le paramètre par défaut de "true"
      * assurera cela, par ex. avec une longueur max de 12 :
      *

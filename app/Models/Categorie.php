@@ -13,6 +13,8 @@ class Categorie extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $fillable = ['categorieName'];
+
     /**
      * produits
      *

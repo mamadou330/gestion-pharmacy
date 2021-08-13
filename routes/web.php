@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AchatController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProduitController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +34,17 @@ Auth::routes();
 
 Route::resource('fournisseur', FournisseurController::class);
 Route::resource('produit', ProduitController::class);
-// Route::resource('user', UserController::class);
+Route::resource('option', OptionController::class);
+Route::resource('categorie', CategorieController::class);
+Route::resource('famille', FamilleController::class);
+Route::resource('achat', AchatController::class);
+
+
+
+
+
+
+
+
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

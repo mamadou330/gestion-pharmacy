@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achat;
+use App\Models\Categorie;
+use App\Models\Famille;
+use App\Models\Option;
+use App\Models\Produit;
 use Illuminate\Http\Request;
 
 class AchatController extends Controller
@@ -14,7 +18,18 @@ class AchatController extends Controller
      */
     public function index()
     {
-        //
+        $products = Produit::orderBy('name')->get();
+
+        $categories = Categorie::orderBy('CategorieName')->get();
+
+        $familles = Famille::orderBy('FamilleName')->get();
+
+        $unites = Option::where([
+            ['unite', true]
+        ])->orderBy('name')->get();
+
+
+        return view('components.achat', compact('products', 'categories', 'familles', 'unites'));
     }
 
     /**

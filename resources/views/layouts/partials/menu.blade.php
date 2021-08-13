@@ -14,7 +14,7 @@
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="nav-icon"></i>
                 <p>Dashboard v1</p>
             </a>
         </li>
@@ -23,19 +23,19 @@
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-ship"></i>
-        <p>Commandes<i class="right fas fa-angle-left px-2"></i></p>
+        <p>Commandes<i class="right fas fa-angle-left"></i></p>
     </a>
-
+    
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+            <a href="{{ route('achat.index') }}" class="nav-link">
+                <i class="nav-icon"></i>
                 <p>Nouvelle Commande</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="nav-icon"></i>
                 <p>Toutes les commandes</p>
             </a>
         </li>
@@ -43,29 +43,44 @@
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link ">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <i class="nav-icon fas fa-tachometer-alt  text-success"></i>
         <p>Produits<i class="right fas fa-angle-left"></i></p>
     </a>
 
-    <ul class="nav nav-treeview ">
+    <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+            <a href="{{ route('produit.index') }}" class="nav-link">
+                <i class="nav-icon"></i>
                 {{-- <ion-icon name="archive-outline"></ion-icon> --}}
-                <p>Ajouter un produit</p>
+                <p>Unité</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Stocks</p>
+            <a href="{{ route('produit.index') }}" class="nav-link">
+                <i class="nav-icon"></i>
+                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <p>Catégories</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('produit.index') }}" class="nav-link">
+                <i class="nav-icon"></i>
+                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <p>Familles</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('produit.index') }}" class="nav-link">
+                <i class="nav-icon"></i>
+                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <p>Produit</p>
             </a>
         </li>
     </ul>
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-fw fa-user "></i>
+        <i class="nav-icon fas fa-users text-success"></i>
         <p>Fournisseurs<i class="right fas fa-angle-left"></i></p>
     </a>
 
@@ -78,7 +93,7 @@
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fas fa-users nav-icon"></i>
                 <p>Tous les fournisseurs</p>
             </a>
         </li>

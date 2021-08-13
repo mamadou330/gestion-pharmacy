@@ -14,7 +14,7 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        //
+        return view('components.produit');
     }
 
     /**
@@ -35,7 +35,19 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'produit' => 'required|string|min:2|max:255',
+            // 'description' => 'string|min:5|max:255'
+        ]);
+
+        $produit = Produit::create([
+            'name' => $request->produit,
+            'description' => $request->description
+        ]);
+
+        // $produit->replicate();
+
+        return back();
     }
 
     /**

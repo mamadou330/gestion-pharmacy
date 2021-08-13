@@ -42,4 +42,14 @@ class Achat extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    /**
+     * option
+     *
+     * @return BelongsTo
+     */
+    public function option(): BelongsTo 
+    {
+        return $this->belongsTo(Option::class);
+    }
 }

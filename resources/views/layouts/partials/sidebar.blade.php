@@ -1,21 +1,20 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #2A2A3E; box-shadow: 2px 8px 20px 0px #000">
-    {{-- <div class="text-center"> --}}
-        <a href="{{ route('home') }}" class="brand-link">
-            <!-- Brand Logo -->
-            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image-xs img-circle elevation-3" style="opacity: .8">
-                {{-- <i class="nav-icon fas fa-home text-white mx-auto text-center"></i> --}}
-            <span class="brand-text badge badge-pill badge-info p-3 font-weight-bolder text-light ml-4 text-center" id="pharmacy_name">{{ config('app.name') }}</span>
-        </a>
-    {{-- </div> --}}
+    <a href="{{ route('home') }}" class="brand-link rounded-bottom" style="background-color: #2A2A3E; box-shadow: 2px 4px 7px 0px #000">
+        <!-- Brand Logo -->
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image-xs img-circle elevation-2" style="opacity: .8">
+            {{-- <i class="nav-icon fas fa-home text-white mx-auto text-center"></i> --}}
+        <span class="brand-text badge badge-pill badge-info p-3 font-weight-bolder text-light ml-4 text-center" id="pharmacy_name">{{ config('app.name') }}</span>
+    </a>
+    <div class="clearfix"></div>
 
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="user-panel clearfix mt-4 p-3 d-flex mb-3 w-100" style="box-shadow: 0px 0px 0px 0px #080808;">
             <div class="image">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
-            <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+            <div class="info" >
+                <a href="#" class="d-block text-justify">Alexander Pierce</a>
             </div>
         </div>
 
