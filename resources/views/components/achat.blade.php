@@ -2,9 +2,10 @@
 @push('page_css')
     <link type="text/css" rel="stylesheet" href="{{asset('css/invoice.css')}}">
     <!-- Select2 -->
-    <link type="text/css" rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}"> 
+    <link type="text/css" rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}"> 
+    <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 @endpush
 @section('content')
     <div class="container p-3 rounded-3" style="background-color: #ffffff">
@@ -18,20 +19,15 @@
         </div>
         <hr>
         
-        {{-- <div class="row">
+        <div class="row">
             <table data-editable data-editable-spy data-navigable-spy class="table table-hover">
                 <thead>
                     <tr>
                         <th>N°</th>
                         <th class="text-center">Designation</th>
                         <th>Quantité</th>
-                        <th>Catégorie</th>
-                        <th>Famille</th>
-                        <th>Unité</th>
                         <th>Prix Achat</th>
                         <th>Prix Vente</th>
-                        <th>Date de Production</th>
-                        <th>Date de péremption</th>
                         <th>Montant</th>
                     </tr>
                 </thead>
@@ -50,7 +46,7 @@
                             </div>
                         </td>
                         <td><input type="number" name="qtt" value="0" placeholder="XXX"></td>
-                        <td >
+                        <td>
                             <select class="form-control select" style="width: 100%;" name="categorie" id="categorie">
                                 @foreach($categories as $categorie)
                                     <option value="{{$categorie->categorieName}}">{{$categorie->categorieName}}</option>
@@ -69,11 +65,22 @@
                         <td class="col-md-2">                
                             <!-- Date -->
                             <div class="form-group">
-                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                            <!--<div class="input-group date" id="reservationdate" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
                                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
+                                </div> -->
+                                
+                                <!-- Date dd/mm/yyyy 
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                                    </div>
+                                 -->
                                 </div>
                             </div>
                         </td>
@@ -81,10 +88,9 @@
                         <td><input type="text" name="mtt" value="0" placeholder="XXX"></td>
                     </tr>
             </table>
+        </div>
 
-        </div> --}}
-
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12 px-2">
                 <div class="card" style="background-color: ">
                     <div class="header">
@@ -124,43 +130,98 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         
         
+      
         {{-- Produit modal  --}}
-        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="produitLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <form action="{{ route('produit.store')}}" method="POST">
-                    @csrf
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title justify-content-beetween" id="produitLabel"><i class="ml-2 fas fa-cart-plus"></i><span class="badge badge-info bg-indigo text-center mx-4 p-2">Ajouter un Produit </span></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend"> 
-                                    <span class="input-group-text"><i class="fas fa-cart-plus"></i></span>
+        <div class="col-6 col-md-3">
+            <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="produitLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <form action="{{ route('produit.store')}}" method="POST">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title justify-content-beetween text-center" id="produitLabel"><i class="ml-2 fas fa-cart-plus"></i><span class="badge badge-info bg-indigo text-center mx-4 p-2">Ajouter un Produit </span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend"> 
+                                        <span class="input-group-text"><i class="fas fa-cart-plus"></i></span>
+                                    </div>
+                                    <input type="text" name="produit" class="form-control @error('produit') is-invalid @enderror" placeholder="Ex: Paracetamol" required autofocus autocomplete>
+                                    @error('produit')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <input type="text" name="produit" class="form-control @error('produit') is-invalid @enderror" placeholder="Ex: Paracetamol" required autofocus autocomplete>
-                                @error('produit')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <div class="row mt-3">
+                                    <div class="form-group col-4 ">
+                                        <label><i class="fas fa-gift text-indigo mx-2"></i>Unité <i class="text-danger">*</i></label>
+                                        <select class="form-control select2" style="width: 100%;" name="unite">
+                                            @foreach($unites as $unite )
+                                                <option value="{{  $unite->id}}">{{ $unite->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label><i class="fas fa-folder-plus text-indigo mx-2"></i>Catégorie <i class="text-danger">*</i></label>                                       
+                                        <select class="form-control select2" style="width: 100%;" name="categorie">
+                                            @foreach($categories as $categorie )
+                                                <option value="{{  $categorie->id}}">{{  $categorie->categorieName}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label><i class="fas fa-archive text-indigo mx-2"></i>Famille <i class="text-danger">*</i></label>
+                                        <select class="form-control select2" style="width: 100%;" name="famille">
+                                            @foreach($familles as $famille )
+                                                <option value="{{  $famille->id}}">{{  $famille->familleName}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <!-- Date -->
+                                        <div class="form-group">
+                                            <label>Date de production</label>
+                                            <div class="input-group date" id="date_production" data-target-input="nearest">
+                                                <input type="text" name="date_production" class="form-control datetimepicker-input" data-target="#date_production"/>
+                                                <div class="input-group-append" data-target="#date_production" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <!-- Date -->
+                                        <div class="form-group">
+                                            <label>Date de d'éxpiration</label>
+                                            <div class="input-group date" id="date_peremption" data-target-input="nearest">
+                                                <input type="text" name="date_peremption" class="form-control datetimepicker-input" data-target="#date_peremption"/>
+                                                <div class="input-group-append" data-target="#date_peremption" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="col-form-label">Description</label>
+                                    <textarea name="description" class="form-control"  id="description" autofocus autocomplete></textarea>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="description" class="col-form-label">Description</label>
-                                <textarea name="description" class="form-control"  id="description" autofocus autocomplete></textarea>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -216,23 +277,38 @@
     </div>
     
 @endsection
-
 @push('page_scripts')
     <!-- Select2 -->
-    <script src="{{asset('plugins/select2/js/select2.min.js')}}"></script>
+    {{-- <script src="{{asset('plugins/select2/js/select2.min.js')}}"></script> --}}
+    <script src="{{asset('plugins/select2/js/i18n/fr.js')}}"></script>
+
+    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
-    {{-- <script src="{{asset('plugins/select2/js/i18n/fr.js')}}"></script> --}}
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
     <script>
         $(function () { 
             //Initialize Select2 Elements
-            $('.select2').select2()
-        });
-        //Date picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
+            $('.select2').select2();
+
         });
 
     </script>
+    <script>
+        $(function () {
+            //Date production
+            $('#date_production').datetimepicker({
+                format: 'L'
+            });
+
+            //Date d'expiration
+            $('#date_peremption').datetimepicker({
+                format: 'L'
+            });
+                
+        });
+  </script>
 
 @endpush

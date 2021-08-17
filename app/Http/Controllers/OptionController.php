@@ -37,11 +37,11 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|min:2|max:255'
+            'unite' => 'required|string|min:2|max:255'
         ]);
-
+        
         Option::firstOrcreate(
-            ['name' => $request->name],
+            ['name' =>$request->unite],
             ['unite' => true]
         );
 

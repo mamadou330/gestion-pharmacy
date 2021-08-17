@@ -13,7 +13,18 @@ class Produit extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
 
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'unite_id', 'categorie_id', 'famille_id', 'date_production', 'date_peremption'];
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'date_production' => 'datetime',
+        'date_peremption' => 'datetime'
+    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -38,6 +49,16 @@ class Produit extends Model
     {
         return $this->belongsTo(Categorie::class);
     }
+
+    /**
+     * famille
+     *
+     * @return BelongsTo
+     */
+    public function famille(): BelongsTo
+    {
+        return $this->belongsTo(Famille::class);
+    }
     
     
     /**
@@ -60,7 +81,23 @@ class Produit extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * user
+     *
+     * @return BelongsTo
+     */
+    public function option(): BelongsTo
+    {
+        return $this->belongsTo(Option::class);
+    }
 
+    
+    /**
+     * getNameAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
     public function getNameAttribute($value)
     {
         return strtoupper($value);

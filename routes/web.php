@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AchatController;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\HomeController;
@@ -40,13 +39,5 @@ Route::resource('categorie', CategorieController::class);
 Route::resource('famille', FamilleController::class);
 Route::resource('achat', AchatController::class);
 Route::resource('vente', VenteController::class);
-
-
-
-
-
-
-
-
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
+use App\Models\Famille;
+use App\Models\Option;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,18 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        return view('components.produit');
+        $products = Produit::orderBy('name')->get();
+        
+        $categories = Categorie::orderBy('CategorieName')->get();
+
+        $familles = Famille::orderBy('FamilleName')->get();
+
+        $unites = Option::where([
+            ['unite', true]
+        ])->orderBy('name')->get();
+        
+
+        return view('components.produit', compact('products', 'categories', 'familles', 'unites'));
     }
 
     /**
@@ -35,14 +49,20 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+        
         $request->validate([
             'produit' => 'required|string|min:2|max:255',
-            // 'description' => 'string|min:5|max:255'
         ]);
 
         $produit = Produit::create([
             'name' => $request->produit,
-            'description' => $request->description
+            'description' => $request->description,
+            'unite_id' => $request->unite,
+            'categorie_id' => $request->categorie,
+            'famille_id' => $request->famille,
+            'date_production' => $request->date_production,
+            'date_peremption' => $request->date_peremption
         ]);
 
         // $produit->replicate();

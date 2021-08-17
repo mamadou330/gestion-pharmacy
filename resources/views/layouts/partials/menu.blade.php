@@ -48,27 +48,27 @@
     </a>
 
     <ul class="nav nav-treeview">
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="{{ route('produit.index') }}" class="nav-link">
                 <i class="nav-icon"></i>
-                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <ion-icon name="archive-outline"></ion-icon>
                 <p>Unité</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('produit.index') }}" class="nav-link">
                 <i class="nav-icon"></i>
-                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <ion-icon name="archive-outline"></ion-icon>
                 <p>Catégories</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('produit.index') }}" class="nav-link">
                 <i class="nav-icon"></i>
-                {{-- <ion-icon name="archive-outline"></ion-icon> --}}
+                <ion-icon name="archive-outline"></ion-icon>
                 <p>Familles</p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="{{ route('produit.index') }}" class="nav-link">
                 <i class="nav-icon"></i>

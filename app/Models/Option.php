@@ -44,4 +44,38 @@ class Option extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    /**
+     * produits
+     *
+     * @return HasMany
+     */
+    public function produits(): HasMany
+    {
+        return $this->hasMany(Produit::class);
+    }
+    
+    /**
+     * getNameAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function getNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    /**
+     * Set the option name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
+    
 }
