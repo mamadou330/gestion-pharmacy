@@ -17,17 +17,18 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $products = Produit::orderBy('name')->get();
-        
         $categories = Categorie::orderBy('CategorieName')->get();
 
         $familles = Famille::orderBy('FamilleName')->get();
 
+        $products = Produit::orderBy('name')
+                    ->with(['categorie', 'famille', 'option'])
+                    ->get();
+        
         $unites = Option::where([
             ['unite', true]
         ])->orderBy('name')->get();
         
-
         return view('components.produit', compact('products', 'categories', 'familles', 'unites'));
     }
 

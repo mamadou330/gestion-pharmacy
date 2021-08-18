@@ -63,7 +63,7 @@ class Option extends Model
      */
     public function getNameAttribute($value)
     {
-        return strtoupper($value);
+        return ucfirst($value);
     }
 
     /**

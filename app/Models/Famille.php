@@ -26,15 +26,15 @@ class Famille extends Model
     }
     
         
-    /**
-     * categories
-     *
-     * @return BelongsToMany
-     */
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Famille::class);
-    }
+    // /**
+    //  * categories
+    //  *
+    //  * @return BelongsToMany
+    //  */
+    // public function categories(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Famille::class);
+    // }
 
     /**
      * user

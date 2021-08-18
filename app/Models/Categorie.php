@@ -25,15 +25,15 @@ class Categorie extends Model
         return $this->hasMany(Produit::class);
     }
     
-    /**
-     * familles
-     *
-     * @return BelongsToMany
-     */
-    public function familles(): BelongsToMany
-    {
-        return $this->belongsToMany(Famille::class);
-    }
+    // /**
+    //  * familles
+    //  *
+    //  * @return BelongsToMany
+    //  */
+    // public function familles(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Famille::class);
+    // }
 
     /**
      * user

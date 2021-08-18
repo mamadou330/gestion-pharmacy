@@ -23,21 +23,39 @@
                             <table id="produit" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th>Id</th>
+                                        <th>Désignation</th>
+                                        <th>Unité</th>
+                                        <th>Catégorie</th>
+                                        <th>Famille</th>
+                                        <th>Date Production</th>
+                                        <th>Date d'expiration</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($products as $product )
                                         <tr>
-                                            <td value="{{  $product->id}}">{{  $product->id}}</td>
-                                            <td value="{{  $product->name}}">{{  $product->name}}</td>
-                                            <td value="{{  $product->name}}">{{  $product->name}}</td>
-                                            <td value="{{  $product->name}}">{{  $product->name}}</td>
-                                            <td value="{{  $product->name}}">{{  $product->name}}</td>
+                                            <td>{{  $product->id}}</td>
+                                            <td>{{  $product->name}}</td>
+                                            <td>{{  get_unite($product->name)}}</td>
+                                            <td>{{  $product->categorie->categorieName}}</td>
+                                            <td>{{  $product->famille->familleName}}</td>
+                                            <td>{{  $product->date_production->translatedFormat('d-F-Y')}}</td>
+                                            <td>{{  $product->date_peremption->translatedFormat('d-F-Y')}}</td>
+                                            <td class="text-right py-0 align-middle">
+                                                {{-- <div class="btn-group btn-group-sm"> --}}
+                                                    <button type="submit" class="btn btn-primary btn-xs viewOrder" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></button>
+                                                    <button type="submit" class="btn btn-info btn-xs editOrder" data-toggle="modal" data-target=".bs-editorder-modal-lg" data-backdrop="static" data-keyboard="false"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modifier"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-xs deleteOrder"  data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fas fa-trash" data-toggle="tooltip" data-placement="left" title="Supprimer"></i></button>
+                                                    {{-- <td class="text-right py-0 align-middle">
+                                                        <div class="btn-group btn-group-sm">
+                                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td> --}}
+                                                {{-- </div> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                    

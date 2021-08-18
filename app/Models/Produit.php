@@ -100,8 +100,13 @@ class Produit extends Model
      */
     public function getNameAttribute($value)
     {
-        return strtoupper($value);
+        return ucfirst($value);
     }
+
+    // public function getDateProductionAttribute($value)
+    // {
+    //     return ucfirst($value);
+    // }
 
   
 }
