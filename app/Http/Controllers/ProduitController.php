@@ -21,9 +21,7 @@ class ProduitController extends Controller
 
         $familles = Famille::orderBy('FamilleName')->get();
 
-        $products = Produit::orderBy('name')
-                    ->with(['categorie', 'famille', 'option'])
-                    ->get();
+        $products = Produit::with(['categorie', 'famille', 'option'])->get();
         
         $unites = Option::where([
             ['unite', true]
@@ -54,6 +52,12 @@ class ProduitController extends Controller
         
         $request->validate([
             'produit' => 'required|string|min:2|max:255',
+            'description' => 'nullable|string|min:2|max:255',
+            'unite' =>  'nullable|integer',
+            'categorie' => 'nullable|integer',
+            'famille' => 'nullable|integer',
+            'date_production' => 'required|date|before:date_peremption',
+            'date_peremption' => 'required|date|after:date_production'
         ]);
 
         $produit = Produit::create([

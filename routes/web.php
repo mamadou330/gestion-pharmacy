@@ -39,6 +39,5 @@ Route::resource('categorie', CategorieController::class);
 Route::resource('famille', FamilleController::class);
 Route::resource('achat', AchatController::class);
 Route::resource('vente', VenteController::class);
-Route::resource('vente', VenteController::class);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -19,16 +19,15 @@ if(!function_exists('page_active')) {
 
 if(!function_exists('get_unite')) {
     function get_unite($produit) {
-
         $product_unite = Produit::select('unite_id')
                         ->where('name', $produit)
                         ->first();
 
         $unite = Option::select('name')
-                ->where([
-                    ['unite', true],
-                    ['id', $product_unite ? $product_unite->unite_id : null]
-                ])->first();
+            ->where([
+                ['unite', true],
+                ['id', $product_unite ? $product_unite->unite_id : null]
+            ])->first();
 
         return $unite ? $unite->name : null;
     }

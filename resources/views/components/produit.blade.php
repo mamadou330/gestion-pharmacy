@@ -9,73 +9,7 @@
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 @endpush
 @section('content')
-
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Tous les produits</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="produit" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Désignation</th>
-                                        <th>Unité</th>
-                                        <th>Catégorie</th>
-                                        <th>Famille</th>
-                                        <th>Date Production</th>
-                                        <th>Date d'expiration</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($products as $product )
-                                        <tr>
-                                            <td>{{  $product->id}}</td>
-                                            <td>{{  $product->name}}</td>
-                                            <td>{{  get_unite($product->name)}}</td>
-                                            <td>{{  $product->categorie->categorieName}}</td>
-                                            <td>{{  $product->famille->familleName}}</td>
-                                            <td>{{  $product->date_production->translatedFormat('d-F-Y')}}</td>
-                                            <td>{{  $product->date_peremption->translatedFormat('d-F-Y')}}</td>
-                                            <td class="text-right py-0 align-middle">
-                                                {{-- <div class="btn-group btn-group-sm"> --}}
-                                                    <button type="submit" class="btn btn-primary btn-xs viewOrder" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></button>
-                                                    <button type="submit" class="btn btn-info btn-xs editOrder" data-toggle="modal" data-target=".bs-editorder-modal-lg" data-backdrop="static" data-keyboard="false"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modifier"></i></button>
-                                                    <button type="submit" class="btn btn-danger btn-xs deleteOrder"  data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fas fa-trash" data-toggle="tooltip" data-placement="left" title="Supprimer"></i></button>
-                                                    {{-- <td class="text-right py-0 align-middle">
-                                                        <div class="btn-group btn-group-sm">
-                                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                        </div>
-                                                    </td> --}}
-                                                {{-- </div> --}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                   
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-
-
-    <div class="row m-3">
+    <div class="row m-4">
         {{-- Option Unité modal  --}}
         <div class="col-6 col-md-3">
             <button type="button" class="bg-indigo border border-indigo-600 p-3 rounded-lg" data-toggle="modal" data-target="#unite" data-whatever="@fat"><i class="fas fa-gift mx-1"></i> Ajouter une Unité</button>
@@ -200,66 +134,82 @@
                                     <div class="input-group-prepend"> 
                                         <span class="input-group-text"><i class="fas fa-cart-plus"></i></span>
                                     </div>
-                                    <input type="text" name="produit" class="form-control @error('produit') is-invalid @enderror" placeholder="Ex: Paracetamol" required autofocus autocomplete>
+                                    <input type="text" name="produit" class="form-control @error('produit') is-invalid @enderror"  value="{{ old('produit')}}" placeholder="Ex: Paracetamol" required autofocus autocomplete>
                                     @error('produit')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="form-group col-4 ">
+                                    <div class="form-group col-3">
                                         <label><i class="fas fa-gift text-indigo mx-2"></i>Unité <i class="text-danger">*</i></label>
-                                        <select class="form-control select2" style="width: 100%;" name="unite">
+                                        <select class="form-control select2 @error('unite') is-invalid @enderror" style="width: 100%;" name="unite">
                                             @foreach($unites as $unite )
-                                                <option value="{{  $unite->id}}">{{ $unite->name}}</option>
+                                                <option value="{{  $unite->id }}">{{ $unite->name}}</option>
                                             @endforeach
+                                            @error('unite')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                     <div class="form-group col-4">
                                         <label><i class="fas fa-folder-plus text-indigo mx-2"></i>Catégorie <i class="text-danger">*</i></label>                                       
-                                        <select class="form-control select2" style="width: 100%;" name="categorie">
+                                        <select class="form-control select2 @error('categorie') is-invalid @enderror" style="width: 100%;" name="categorie">
                                             @foreach($categories as $categorie )
                                                 <option value="{{  $categorie->id}}">{{  $categorie->categorieName}}</option>
                                             @endforeach
+                                            @error('categorie')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
-                                    <div class="form-group col-4">
+                                    <div class="form-group col-5">
                                         <label><i class="fas fa-archive text-indigo mx-2"></i>Famille <i class="text-danger">*</i></label>
-                                        <select class="form-control select2" style="width: 100%;" name="famille">
+                                        <select class="form-control @error('famille') is-invalid @enderror select2" style="width: 100%;" name="famille">
                                             @foreach($familles as $famille )
                                                 <option value="{{  $famille->id}}">{{  $famille->familleName}}</option>
                                             @endforeach
+                                            @error('famille')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <!-- Date -->
                                         <div class="form-group">
                                             <label>Date de production</label>
                                             <div class="input-group date" id="date_production" data-target-input="nearest">
-                                                <input type="text" name="date_production" class="form-control datetimepicker-input" data-target="#date_production"/>
+                                                <input type="text" name="date_production" class="form-control datetimepicker-input @error('date_production') is-invalid @enderror" value="{{ old('date_production')}}" data-target="#date_production"/>
                                                 <div class="input-group-append" data-target="#date_production" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
+                                                @error('date_production')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <!-- Date -->
                                         <div class="form-group">
                                             <label>Date de d'éxpiration</label>
                                             <div class="input-group date" id="date_peremption" data-target-input="nearest">
-                                                <input type="text" name="date_peremption" class="form-control datetimepicker-input" data-target="#date_peremption"/>
+                                                <input type="text" name="date_peremption" class="form-control datetimepicker-input @error('date_peremption') is-invalid @enderror" value="{{ old('date_peremption')}}" data-target="#date_peremption"/>
                                                 <div class="input-group-append" data-target="#date_peremption" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
+                                                @error('date_peremption')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="col-form-label">Description</label>
-                                    <textarea name="description" class="form-control"  id="description" autofocus autocomplete></textarea>
+                                    <textarea name="description" class="form-control @error('description') is-invalid @enderror"  id="description" autofocus autocomplete>{{old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -272,6 +222,70 @@
             </div>
         </div>
     </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 rounded">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-success font-weight-bold"> <i class="fas fa-ship"></i> Tous les produits</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="produit" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Désignation</th>
+                                        <th>Unité</th>
+                                        <th>Catégorie</th>
+                                        <th>Famille</th>
+                                        <th>Date Production</th>
+                                        <th>Date d'expiration</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($products as $product )
+                                        <tr>
+                                            <td>{{  $product->id}}</td>
+                                            <td>{{  $product->name}}</td>
+                                            <td>{{  get_unite($product->name)}}</td>
+                                            <td>{{  $product->categorie->categorieName}}</td>
+                                            <td>{{  $product->famille->familleName}}</td>
+                                            <td>{{  $product->date_production->translatedFormat('d-F-Y')}}</td>
+                                            <td>{{  $product->date_peremption->translatedFormat('d-F-Y')}}</td>
+                                            <td class="text-right py-0 align-middle">
+                                                {{-- <div class="btn-group btn-group-sm"> --}}
+                                                    <button type="submit" class="btn btn-primary btn-xs viewOrder" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></button>
+                                                    <button type="submit" class="btn btn-info btn-xs editOrder" data-toggle="modal" data-target=".bs-editorder-modal-lg" data-backdrop="static" data-keyboard="false"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modifier"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-xs deleteOrder"  data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fas fa-trash" data-toggle="tooltip" data-placement="left" title="Supprimer"></i></button>
+                                                    {{-- <td class="text-right py-0 align-middle">
+                                                        <div class="btn-group btn-group-sm">
+                                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        </div>
+                                                    </td> --}}
+                                                {{-- </div> --}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 @endsection
 @push('page_scripts')
 
