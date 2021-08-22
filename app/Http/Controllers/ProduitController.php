@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Categorie;
 use App\Models\Famille;
 use App\Models\Option;
@@ -21,13 +22,13 @@ class ProduitController extends Controller
 
         $familles = Famille::orderBy('FamilleName')->get();
 
-        $products = Produit::with(['categorie', 'famille', 'option'])->get();
+        $produits = Produit::with(['categorie', 'famille', 'option'])->get();
         
         $unites = Option::where([
             ['unite', true]
         ])->orderBy('name')->get();
         
-        return view('components.produit', compact('products', 'categories', 'familles', 'unites'));
+        return view('components.produit', compact('produits', 'categories', 'familles', 'unites'));
     }
 
     /**
@@ -48,17 +49,20 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $request->validate([
+        $data = $request->validate([
             'produit' => 'required|string|min:2|max:255',
             'description' => 'nullable|string|min:2|max:255',
             'unite' =>  'nullable|integer',
             'categorie' => 'nullable|integer',
             'famille' => 'nullable|integer',
             'date_production' => 'required|date|before:date_peremption',
-            'date_peremption' => 'required|date|after:date_production'
+            'date_peremption' => 'required|date|after:date_production' 
         ]);
-
+        
+        // if(!$data) {
+        //     return response()->json('errors', $data);
+        // }
+        
         $produit = Produit::create([
             'name' => $request->produit,
             'description' => $request->description,
@@ -68,9 +72,6 @@ class ProduitController extends Controller
             'date_production' => $request->date_production,
             'date_peremption' => $request->date_peremption
         ]);
-
-        // $produit->replicate();
-
         return back();
     }
 
@@ -82,7 +83,7 @@ class ProduitController extends Controller
      */
     public function show(Produit $produit)
     {
-        //
+        return response()->json($produit);
     }
 
     /**
@@ -118,4 +119,8 @@ class ProduitController extends Controller
     {
         //
     }
+
+    // public function addProduct() {
+        
+    // }
 }

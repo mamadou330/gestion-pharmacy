@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achat;
-use App\Models\Categorie;
-use App\Models\Famille;
-use App\Models\Option;
-use App\Models\Produit;
 use Illuminate\Http\Request;
 
-class AchatController extends Controller
+class AddProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,18 +13,7 @@ class AchatController extends Controller
      */
     public function index()
     {
-        $products = Produit::orderBy('name')->get();
-
-        $categories = Categorie::orderBy('CategorieName')->get();
-
-        $familles = Famille::orderBy('FamilleName')->get();
-
-        $unites = Option::where([
-            ['unite', true]
-        ])->orderBy('name')->get();
-
-        $achat = Achat::all();
-        return view('components.achat', compact('products', 'categories', 'familles', 'unites', 'achat'));
+        //
     }
 
     /**
@@ -50,16 +34,18 @@ class AchatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $data = $request->all();
+        return redirect()->back()->with('data', $data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Achat  $achat
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Achat $achat)
+    public function show($id)
     {
         //
     }
@@ -67,10 +53,10 @@ class AchatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Achat  $achat
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Achat $achat)
+    public function edit($id)
     {
         //
     }
@@ -79,10 +65,10 @@ class AchatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Achat  $achat
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Achat $achat)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -90,10 +76,10 @@ class AchatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Achat  $achat
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Achat $achat)
+    public function destroy($id)
     {
         //
     }

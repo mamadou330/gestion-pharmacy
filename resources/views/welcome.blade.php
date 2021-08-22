@@ -69,6 +69,11 @@
             </div>
             <!-- /.row -->
 
+            <div class="row">
+                <home-component></home-component>
+                <tasks-component></tasks-component>
+            </div>
+
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

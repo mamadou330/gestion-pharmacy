@@ -41,7 +41,7 @@
 
 {{-- <script src="sweetalert2.all.min.js"></script> --}}
 
-{{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
+{{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
 </body>
 </html>

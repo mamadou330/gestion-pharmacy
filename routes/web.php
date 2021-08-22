@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AchatController;
+use App\Http\Controllers\AddItemController;
+use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\FournisseurController;
@@ -33,11 +35,15 @@ Route::get('/contact', function () {
 Auth::routes();
 
 Route::resource('fournisseur', FournisseurController::class);
+// Route::post('addProduct', [ProduitController::class, 'addProduct'])->name('addProduct');
 Route::resource('produit', ProduitController::class);
 Route::resource('option', OptionController::class);
 Route::resource('categorie', CategorieController::class);
 Route::resource('famille', FamilleController::class);
 Route::resource('achat', AchatController::class);
 Route::resource('vente', VenteController::class);
+
+
+Route::post('addProduct', [AddProductController::class, 'store'])->name('addProduct');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

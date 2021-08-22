@@ -86,7 +86,7 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title justify-content-beetween" id="fournisseurModalLabel"><i class="ml-2 fas fa-users"></i><span class="badge badge-pill badge-info text-center mx-2 p-2">Ajouter un fournisseur </span></h5>
+                        <h5 class="modal-title justify-content-beetween" id="fournisseurModalLabel"><i class="ml-2 fas fa-users"></i><span class="badge badge-pill badge-info text-center bg-indigo text-center mx-2 p-2">Ajouter un fournisseur </span></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save mx-1"></i>Enregistrer</button>
+                        <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                     </div>
                 </div>
             </form>
@@ -148,17 +148,18 @@
     <script>
         $(function () {
             $("#fournisseur").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#fournisseur_wrapper .col-md-6:eq(0)');
+
             $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
             });
         });
     </script>
