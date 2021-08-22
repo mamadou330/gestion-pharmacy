@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- daterange picker -->
+    <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 @endpush
 @section('content')
@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Date de d'éxpiration</label>
+                                            <label>Date d'éxpiration</label>
                                             <div class="input-group date" id="date_peremption" data-target-input="nearest">
                                                 <input type="text" name="date_peremption" class="form-control datetimepicker-input @error('date_peremption') is-invalid @enderror" value="{{ old('date_peremption')}}" data-target="#date_peremption"/>
                                                 <div class="input-group-append" data-target="#date_peremption" data-toggle="datetimepicker">
@@ -291,10 +291,12 @@
 
     <!-- InputMask -->
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('plugins/inputmask/jquery.inputmask.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+   
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" type="text/javascript"></script>
