@@ -47,17 +47,18 @@ class ProduitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $data = $request->validate([
-            'produit' => 'required|string|min:2|max:255',
-            'description' => 'nullable|string|min:2|max:255',
-            'unite' =>  'nullable|integer',
-            'categorie' => 'nullable|integer',
-            'famille' => 'nullable|integer',
-            'date_production' => 'required|date|before:date_peremption',
-            'date_peremption' => 'required|date|after:date_production' 
-        ]);
+
+        // $request->validate([
+        //     'produit' => 'required|string|min:2|max:255',
+        //     'description' => 'nullable|string|min:2|max:255',
+        //     'unite' =>  'nullable|integer',
+        //     'categorie' => 'nullable|integer',
+        //     'famille' => 'nullable|integer',
+        //     'date_production' => 'required|date|before:date_peremption',
+        //     'date_peremption' => 'required|date|after:date_production' 
+        // ]);
         
         // if(!$data) {
         //     return response()->json('errors', $data);

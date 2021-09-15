@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class FournisseurController extends Controller
@@ -15,7 +16,10 @@ class FournisseurController extends Controller
      */
     public function index()
     {
-        return view('components.fournisseur');
+        $fournisseurs = Fournisseur::all(); 
+
+        
+        return view('components.fournisseur', compact('fournisseurs'));
     }
 
     /**
@@ -38,17 +42,38 @@ class FournisseurController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:3|max:255',
-            'address' => 'string|min:3|max:255',
+            'address' => 'nullable|string|min:3|max:255',
             'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
-            'email' => 'email|string|min:3|max:255'
+            'email' => 'nullable|email|string|min:3|max:255'
         ]);
+        
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|min:3|max:255',
+        //     // 'address' => 'nullable|string|min:3|max:255',
+        //     'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
+        //     // 'email' => 'nullable|email|string|min:3|max:255'
+        // ]);
 
-        Fournisseur::firstOrcreate(
-            ['name' => $request->name, 'phone' => $request->phone],
-            ['address' => $request->address,'email' => $request->email]
-        );
+        // if (!$validator->passes()) {
+        //     return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            
+        // } else {
+        //     $fournisseur = Fournisseur::firstOrcreate(
+        //         ['name' => $request->name, 'phone' => $request->phone],
+        //         ['address' => $request->address, 'email' => $request->email]
+        //     );
 
-        return back();
+        //     if ($fournisseur) {
+        //         return response()->json($fournisseur, ['code' => 1, 'msg' => "Succcès, Votre founisseur a bien été enregistré"]);
+        //     } else {           
+        //         return response()->json(['code' => 0, 'msg' => "Erreur lors de l'enregistrement du fournisseur"]);
+        //     }
+            
+        // }
+        
+        $fournisseur = Fournisseur::create($request->only('name', 'phone', 'address', 'email'));
+        return response()->json($fournisseur);
+        // return back();
     }
 
     /**
@@ -68,9 +93,11 @@ class FournisseurController extends Controller
      * @param  \App\Models\Fournisseur  $fournisseur
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fournisseur $fournisseur)
+    public function edit($id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+
+        return response()->json($fournisseur);
     }
 
     /**
@@ -94,5 +121,13 @@ class FournisseurController extends Controller
     public function destroy(Fournisseur $fournisseur)
     {
         //
+    }
+
+
+    public function getAllFounisseur() 
+    {
+        $fournisseurs = Fournisseur::all(); 
+        
+        return response()->json($fournisseurs);
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\VenteController;
+use App\Models\Vente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Auth::routes();
+
 
 Route::resource('fournisseur', FournisseurController::class);
 // Route::post('addProduct', [ProduitController::class, 'addProduct'])->name('addProduct');

@@ -70,7 +70,7 @@
             </a>
         </li> --}}
         <li class="nav-item">
-            <a href="{{ route('produit.index') }}" class="nav-link">
+            <a href="@route('produit.index')" class="nav-link">
                 <i class="nav-icon"></i>
                 {{-- <ion-icon name="archive-outline"></ion-icon> --}}
                 <p>Produit</p>
