@@ -126,7 +126,6 @@
                   </select>
                 </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -292,9 +291,7 @@
         $(function () { 
             //Initialize Select2 Elements
             $('.select2').select2();
-
         });
-
     </script>
     <script>
         $(function () {
@@ -302,7 +299,6 @@
             $('#date_production').datetimepicker({
                 format: 'L'
             });
-
             //Date d'expiration
             $('#date_peremption').datetimepicker({
                 format: 'L'

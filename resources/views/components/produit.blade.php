@@ -79,6 +79,7 @@
                 </div>
             </div>
         </div>
+        {{--/.Categorie modal--}}
 
         {{-- Famille modal  --}}
         <div class="col-6 col-md-3">
@@ -114,6 +115,7 @@
                 </div>
             </div>
         </div>
+        {{--/.Famille modal--}}
 
         {{-- Produit modal  --}}
         <div class="col-6 col-md-3">
@@ -191,7 +193,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Date de d'éxpiration</label>
+                                            <label>Date d'éxpiration</label>
                                             <div class="input-group date" id="date_peremption" data-target-input="nearest">
                                                 <input type="text" name="date_peremption" class="form-control datetimepicker-input @error('date_peremption') is-invalid @enderror" value="{{ old('date_peremption')}}" data-target="#date_peremption"/>
                                                 <div class="input-group-append" data-target="#date_peremption" data-toggle="datetimepicker">
@@ -221,6 +223,110 @@
                 </div>
             </div>
         </div>
+        {{--/.Produit modal--}}
+        
+        {{-- SHOW MODAL--}}
+        {{-- <div class="modal fade bs-show-modal-lg" id="productShow" aria-labelledby="productShow" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" id="contentPrint">
+        
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-calculator"></i> <span
+                                id="numInvoice">Produit</span></h4>
+                    </div>
+                    <div class="modal-body">
+        
+        
+        
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-xs-12 invoice-header">
+                                <h1>
+                                    <i class="fa fa-ship"></i> Order.
+                                    <small class="lead pull-right">Date: <span id="date">16/08/2016</span></small>
+                                </h1>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                                From
+                                <address>
+                                    <strong id="custName">▓▓▓ ▓▓</strong>
+                                    <br><span id="adress">▓ ▓▓, ▓ ▓</span>
+                                    <br><span id="phone">Phone: (▓) ▓-▓</span>
+                                    <br><span id="email">Email: ▓@▓.com</span>
+                                </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                               
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                <b>Invoice #<span id="numInvoices"></span></b>
+                                <br>
+                                <b>Order ID:</b> ▓
+                                <br>
+                                <b>Payment Due:</b> <span id="dateUp">▓/▓/▓</span>
+                                <br>
+                                <b>Account:</b> ▓-▓
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+        
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-xs-12 table">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Product</th>
+                                            <th>Qtt</th>
+                                            <th>Unity</th>
+                                            <th>PA</th>
+                                            <th>Mtt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="elInvoice">
+                                        <tr>
+                                            <td>x</td>
+                                            <td>xxxxxxxxxxxx</td>
+                                            <td>xxxxxxxxxxxxxxxx</td>
+                                            <td>xxxxxxxx</td>
+                                            <td>xxxxx</td>
+                                            <td>xxxxx</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+        
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-xs-12">
+                                <button class="btn btn-default" id="print"><i class="fa fa-print"></i> Print</button>
+                                <!--<button class="btn btn-default" onclick="javascript:print();"><i class="fa fa-print"></i> Print</button> -->
+                            </div>
+                        </div>
+        
+        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" data-dismiss="modal" id="closev">Close</button>
+                    </div>
+        
+                </div>
+            </div>
+        </div> --}}
+        {{--/.SHOW MODAL--}}
     </div>
 
     <section class="content">
@@ -248,7 +354,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($products as $product )
-                                        <tr>
+                                        <tr class="product">
                                             <td>{{  $product->id}}</td>
                                             <td>{{  $product->name}}</td>
                                             <td>{{  get_unite($product->name)}}</td>
@@ -256,9 +362,9 @@
                                             <td>{{  $product->famille->familleName}}</td>
                                             <td>{{  $product->date_production->translatedFormat('d-F-Y')}}</td>
                                             <td>{{  $product->date_peremption->translatedFormat('d-F-Y')}}</td>
-                                            <td class="text-right py-0 align-middle">
+                                            <td class="text-right py-0 align-middle action">
                                                 {{-- <div class="btn-group btn-group-sm"> --}}
-                                                    <button type="submit" class="btn btn-primary btn-xs viewOrder" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></button>
+                                                    <a href="{{ route('produit.show', $product)}}" class="btn btn-primary btn-xs productShow"  data-target="bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></a>
                                                     <button type="submit" class="btn btn-info btn-xs editOrder" data-toggle="modal" data-target=".bs-editorder-modal-lg" data-backdrop="static" data-keyboard="false"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modifier"></i></button>
                                                     <button type="submit" class="btn btn-danger btn-xs deleteOrder"  data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fas fa-trash" data-toggle="tooltip" data-placement="left" title="Supprimer"></i></button>
                                                     {{-- <td class="text-right py-0 align-middle">
@@ -328,5 +434,102 @@
                 
         });
   </script>
+  {{-- <script>
+        /**
+         * SHOW Product.
+         */
+        $('.product').find('.action').find('.productShow').on('click', function(event) {
+            event.preventDefault();
+            //console.log(event.target.parentNode.parentNode.parentNode.dataset['id']);
+
+            var id = event.target.parentNode.parentNode.parentNode.dataset['id'];
+            // var url = event.target.parentNode.parentNode.parentNode.dataset['url'];
+            alert()
+            //alert(id + ' ET ' + url);
+            if (!id) {
+                id = event.target.parentNode.parentNode.dataset['id'];
+            }
+            if (!url) {
+                url = event.target.parentNode.parentNode.dataset['url'];
+            }
+
+            $.ajax({
+                method: 'GET',
+                url: url,
+                data: {
+                    _token: token,
+                    id: id
+                },
+                error: function(responseJSON, statusText) {
+                    //                    console.log(responseJSON);
+                    if (statusText == 'error') {
+                        new PNotify({
+                            title: 'Veuillez resseyer !',
+                            text: 'La réquête a été interompu.',
+                            type: 'warning',
+                            styling: 'bootstrap3'
+                        });
+                    }
+                }
+            }).done(function(msg) {
+                //Debug
+                //alert('Success Total');
+                //console.log(msg['date']);
+
+                var data_manag_inv = msg['val_mi'];
+                if (!data_manag_inv) {
+                    new PNotify({
+                        title: 'Veuillez resseyer !',
+                        text: 'La réquête a été interompu.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                    window.location.reload();
+                }
+                var data_inv = msg['val_invce'];
+                var invoice = msg['invoice'];
+                // console.log(invoice);
+                if (invoice == null) {
+                    new PNotify({
+                        title: 'Veuillez resseyer !',
+                        text: 'La réquête a été interompu.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }
+
+                $('#date').text(msg['date']);
+                $('#dateUp').text(msg['dateUp']);
+                $('#custName').text(msg['customer']);
+                $('#adress').text(msg['adresse']);
+                $('#phone').text("Phone: " + msg['phone']);
+                $('#email').text("Email : " + msg['email']);
+                $('#numInvoice').text(data_manag_inv.id);
+                $('#numInvoices').text(data_manag_inv.id);
+                $('#total').text(data_manag_inv.invoiceTotal + " GNF");
+                $('#remain').text(data_manag_inv.remain + " GNF");
+                var i = 1;
+                var j = 0;
+                var content = '';
+                while (i <= msg['countTot']) {
+                    content += "<tr>\n" +
+                        "    <td>" + i + "</td>\n" +
+                        "    <td>" + msg['itName'][j] + "</td>\n" +
+                        "    <td>" + data_inv[j].qtt + "</td>\n" +
+                        "    <td>" + data_inv[j].unity + "</td>\n" +
+                        "    <td>" + data_inv[j].sellingPric + "</td>\n" +
+                        "    <td>" + data_inv[j].montant + "</td>\n" +
+                        "</tr>";
+                    $('#elInvoice').html(content);
+                    i++;
+                    j++;
+                }
+
+            });
+            $('#closev').on('click', function() {
+                //window.location.reload();
+            });
+        });
+  </script> --}}
 @endpush 
 

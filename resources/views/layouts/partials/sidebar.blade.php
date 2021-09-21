@@ -30,7 +30,7 @@
             </div>
         </div>
     
-        <nav class="mt-2">        
+        <nav class="mt-2 text-md">        
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @include('layouts.partials.menu')
             </ul>

@@ -14,8 +14,8 @@
         crossorigin="anonymous"/>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{asset('css/normalize.css')}}">
-    <link rel="stylesheet" href="{{asset('css/main.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('css/normalize.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('css/main.css')}}"> --}}
 
     {{-- //tiers_parties_stylesheets => fichier css qui doivent etre inclus de facons globale --}}
     {{-- @yield('third_party_stylesheets')  --}}
