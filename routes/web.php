@@ -36,6 +36,7 @@ Route::get('/contact', function () {
 Auth::routes();
 
 
+Route::get('fournisseurs', [FournisseurController::class, 'getAllFournisseur'])->name('fournisseur.all');
 Route::resource('fournisseur', FournisseurController::class);
 // Route::post('addProduct', [ProduitController::class, 'addProduct'])->name('addProduct');
 Route::resource('produit', ProduitController::class);

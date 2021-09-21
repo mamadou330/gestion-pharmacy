@@ -24,27 +24,27 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nom</th>
-                                    <th>Adresse</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
+                                    <th>Adresse</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="data">
+                            <tbody id="row">
                                 @foreach ($fournisseurs as $fournisseur)
-                                <tr>
+                                <tr id="fid{{$fournisseur->id }}">
                                     <td>{{ $fournisseur->id }}</td>
                                     <td>{{ $fournisseur->name }}</td>
-                                    <td>{{ $fournisseur->address }}</td>
                                     <td>{{ $fournisseur->email }}</td>
                                     <td>{{ $fournisseur->phone }}</td>
+                                    <td>{{ $fournisseur->address }}</td>
                                     <td class="text-right py-0 align-middle action">
                                         <div class="btn-group btn-group-sm">
                                             <a href="javascript:void(0)" role="button"
                                                 class="btn btn-primary btn-xs viewFournisseur" data-toggle="modal"
                                                 data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"
                                                     data-toggle="tooltip" data-placement="top" title="Voir"></i></a>
-                                            <a href="javascript:void(0)" role="button"
+                                            <a href="javascript:void(0)" role="button" id="editButton"
                                                 class="btn btn-info btn-xs editFournisseur" data-bs-toggle="modal"
                                                 data-bs-target="#fournisseurEditModal" data-bs-whatever="@fat"
                                                 onclick="editFournisseur({{ $fournisseur->id }})" data-backdrop="static"
@@ -53,13 +53,13 @@
                                                     title="Modifier"></i>
                                             </a>
                                             <a href="javascript:void(0)" role="button"
-                                                class="btn btn-danger btn-xs deleteFounisseur" data-method="DELETE"
-                                                data-confirm="Etes-vous sûr"><i class="fas fa-trash"
+                                                class="btn btn-danger btn-xs deleteFournisseur" data-method="DELETE"
+                                                data-confirm="Etes-vous sûr" onclick="deleteFournisseur({{$fournisseur->id}})"><i class="fas fa-trash"
                                                     data-toggle="tooltip" data-placement="left"
                                                     title="Supprimer"></i></a>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> 
                                 @endforeach
                             </tbody>
                             <tfoot>
@@ -81,10 +81,10 @@
 
 <!-- Small modal -->
 
-{{-- BEGIN ADD FOUNISSEUR MODAL --}}
+{{-- BEGIN ADD FOURNISSEUR MODAL --}}
 <div class="modal fade" id="fournisseurModal" tabindex="-1" aria-labelledby="fournisseurModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <form action="@route('fournisseur.store')" method="POST" id="founisseurForm">
+        <form action="@route('fournisseur.store')" method="POST" id="fournisseurForm">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -142,19 +142,18 @@
         </form>
     </div>
 </div>
-{{-- END ADD FOUNISSEUR MODAL --}}
+{{-- END ADD FOURNISSEUR MODAL --}}
 
 {{-- BEGIN EDIT FOURNISSEUR MODAL --}}
 <div class="modal fade" id="fournisseurEditModal" tabindex="-1" aria-labelledby="fournisseurEditModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <form action="@route('fournisseur.update', $fournisseur)" method="POST" id="founisseurForm">
+        <form id="fournisseurEditForm">
             @csrf
             <input type="hidden" name="id" id="id">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title justify-content-beetween" id="fournisseurEditModalLabel"><i
-                            class="ml-2 fas fa-users"></i><span
-                            class="badge badge-pill badge-info text-center bg-indigo text-center mx-2 p-2">Modifier le fournisseur</span></h5>
+                    <h5 class="modal-title" id="fournisseurEditModalLabel">
+                        <span class="badge badge-pill badge-info bg-indigo text-center p-2">Modification du fournisseur</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -217,29 +216,19 @@
 <script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{asset('plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
 <script>
     $(function () {
-            $("#fournisseur").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#fournisseur_wrapper .col-md-6:eq(0)');
 
-           $('#fournisseurTable').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": true,
-                "responsive": true, 
-            });
+        $('#fournisseurTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true, 
         });
+    });
 </script>
 <script>
     // $.ajaxSetup({
@@ -255,11 +244,50 @@
         $('#emailError').html('');
     });
 
-    $('#founisseurForm').submit(function(e) {
+
+    function getAllFournisseur() {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('fournisseur.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {
+                    if(value.address === null) {
+                        value.address = "Pas d'adresse"
+                    }    
+                    if(value.email === null) {
+                        value.email = 'Fournisseur@gmail.com'
+                    }
+                    data = data + '<tr id="fid('+value.id+')">'
+                    data = data + "<td>"+ value.id + "</td>"
+                    data = data + "<td>"+ value.name + "</td>"
+                    data = data + "<td>"+ value.email + "</td>"
+                    data = data + "<td>"+ value.phone + "</td>"
+                    data = data + "<td>"+ value.address + "</td>"
+                    data = data + '<td class="text-right py-0 align-middle action">'
+                    data = data + '<div class="btn-group btn-group-sm">'
+                    data = data + '<a href="javascript:void(0)" role="button" class="btn btn-primary btn-xs viewFournisseur" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"data-toggle="tooltip" data-placement="top" title="Voir"></i></a>'
+                    data = data + '<a href="javascript:void(0)" role="button" class="btn btn-info btn-xs editFournisseur" data-bs-toggle="modal" id="editButton" data-bs-target="#fournisseurEditModal" data-bs-whatever="@fat"onclick="editFournisseur('+value.id+')"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top"title="Modifier"></i>'
+                    data = data + '<a href="javascript:void(0)" role="button" class="btn btn-danger btn-xs deleteFournisseur" data-method="DELETE"  data-confirm="Etes-vous sûr" onclick="deleteFournisseur('+value.id+')"><i class="fas fa-trash"  data-toggle="tooltip" data-placement="left" title="Supprimer"></i></a>'
+                    data = data + '</div>'
+                    data = data + "</td>"
+                    data = data + "</tr>"
+
+                });
+                $('#row').html(data);
+                // window.location.reload();
+            }
+        });
+    }
+
+    getAllFournisseur();
+
+    $('#fournisseurForm').submit(function(e) {
         e.preventDefault();
 
         let form = this;
-        let token = "{{ Session::token() }}"
+        let token = "{{ Session::token() }}";
         let name = $('#name').val();
         let phone = $('#phone').val();
         let address = $('#address').val();
@@ -269,14 +297,6 @@
             url: $(this).attr('action'),
             method: $(this).attr('method'),
             dataType: "json",
-            // type: "POST",
-            // data:{
-            //     _token: token,
-            //     name: name,
-            //     phone: phone,
-            //     address: address,
-            //     email: email,
-            // },
             data: new FormData(this),
             processData:false,
             contentType: false,
@@ -291,30 +311,14 @@
                         response.email = 'Fournisseur@gmail.com'
                     }
 
-                    $('#fournisseurTable tbody').prepend(
-                        '<tr><td>' 
-                            + response.id + '</td><td>' 
-                            + response.name + '</td><td>' 
-                            + response.address + '</td><td>'
-                            + response.email + '</td><td>'
-                            + response.phone + '</td><td class="text-right py-0 align-middle action">'
-                            +'<div class="btn-group btn-group-sm">'                         
-                                +' <button type="submit" class="btn btn-primary btn-xs viewFournisseur" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open" data-toggle="tooltip" data-placement="top" title="Voir"></i></button>'
-                                + '<button type="submit" class="btn btn-info btn-xs editFournisseur" data-toggle="modal" data-target=".bs-editorder-modal-lg" data-backdrop="static" data-keyboard="false"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modifier"></i></button>' 
-                                + '<button type="submit" class="btn btn-danger btn-xs deleteFournisseur"  data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fas fa-trash" data-toggle="tooltip" data-placement="left" title="Supprimer"></i></button>'
-                            +'</div>'
-                            + '</td></tr>'
-                    );
-                    $('#nameError').html('');
-                    $('#phoneError').html();
-                    $('#addressError').html();
-                    $('#emailError').html();
+                    // $('#nameError').html('');
+                    // $('#phoneError').html('');
+                    // $('#addressError').html('');
+                    // $('#emailError').html('');
 
-                    $('#founisseurForm')[0].reset();
-                    $('#founisseurForm').trigger('reset');
+                    $('#fournisseurForm')[0].reset();
                     $('#fournisseurModal').modal('hide');
-                    // window.location.reload();
-
+                    getAllFournisseur();
                 }
             },
             error: function(error) {
@@ -324,11 +328,82 @@
                 $('#emailError').text(error.responseJSON.errors.email);
 
             }
-
         });
-            
     });
     
+    function editFournisseur(id) {
+        $.get("@route('fournisseur.index')/" + id + '/edit', function(fournisseur) {
+            $('#id').val(fournisseur.id);
+            $('#nameEdit').val(fournisseur.name);
+            $('#emailEdit').val(fournisseur.email);
+            $('#phoneEdit').val(fournisseur.phone);
+            $('#addressEdit').val(fournisseur.address);
+            $('#fournisseurEditModal').modal('toggle');
+        });
+    }
+    
+    $('#fournisseurEditForm').submit(function(e) {
+        e.preventDefault();
 
+        let id = $('#id').val();
+        let name = $('#nameEdit').val();
+        let email = $('#emailEdit').val();
+        let phone = $('#phoneEdit').val();
+        let address = $('#addressEdit').val();
+
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            url:  "@route('fournisseur.index')/" + id,
+            data: {
+                _token: "{{ Session::token()}}",
+                id: id,
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+            },
+            success: function(response) {
+                $('#fid' + response.id + 'td:nth-child(1)').text(response.name);
+                $('#fid' + response.id + 'td:nth-child(2)').text(response.email);
+                $('#fid' + response.id + 'td:nth-child(3)').text(response.phone);
+                $('#fid' + response.id + 'td:nth-child(4)').text(response.address);
+
+                $('#fournisseurEditForm')[0].reset();
+                $('#nameEditError').html('');
+                $('#phoneEditError').html('');
+                $('#addressEditError').html('');
+                $('#emailEditError').html('');
+                $('#fournisseurEditModal').modal('toggle');
+                getAllFournisseur();
+            },
+            error: function(error) {
+                console.log(error.responseJSON.errors);
+                $('#nameEditError').text(error.responseJSON.errors.name);
+                $('#phoneEditError').text(error.responseJSON.errors.phone);
+                $('#emailEditError').text(error.responseJSON.errors.email);
+                $('#addressEditError').text(error.responseJSON.errors.address);
+            }
+
+        });
+    })
+</script>
+<script>
+    function deleteFournisseur(id) {
+        if(confirm("Etes-vous sur de supprimer ce fournisseur")) {
+            $.ajax({
+                type: "DELETE",
+                url: "@route('fournisseur.index')/" + id,
+                data: {
+                    _token: "{{ Session::token()}}"
+                },
+                success: function() {
+                    $('#fid').remove();
+                    getAllFournisseur();
+
+                }
+            });
+        }
+    }
 </script>
 @endpush

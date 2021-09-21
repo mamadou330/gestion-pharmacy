@@ -107,9 +107,25 @@ class FournisseurController extends Controller
      * @param  \App\Models\Fournisseur  $fournisseur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fournisseur $fournisseur)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'address' => 'nullable|string|min:3|max:255',
+            'phone' => ['required', 'string', 'min:9', 'max:255'],
+            'email' => 'nullable|email|string|min:3|max:255'
+        ]);
+        
+        $fournisseur = Fournisseur::findOrFail($request->id);
+
+        $fournisseur->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return response()->json($fournisseur);
     }
 
     /**
@@ -118,15 +134,19 @@ class FournisseurController extends Controller
      * @param  \App\Models\Fournisseur  $fournisseur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fournisseur $fournisseur)
+    public function destroy($id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+
+        $fournisseur->delete();
+        return response()->json(['success' => 'Record has been deleted']);
+        
     }
 
 
-    public function getAllFounisseur() 
+    public function getAllFournisseur() 
     {
-        $fournisseurs = Fournisseur::all(); 
+        $fournisseurs = Fournisseur::latest()->get(); 
         
         return response()->json($fournisseurs);
     }
