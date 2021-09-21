@@ -9,9 +9,9 @@
     <meta name="author" content="mamadou_saliou_bah" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-        crossorigin="anonymous"/>
+        crossorigin="anonymous"/> --}}
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{asset('css/normalize.css')}}"> --}}
@@ -21,12 +21,12 @@
     {{-- @yield('third_party_stylesheets')  --}}
     
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback')}}">
+    {{-- <link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback')}}"> --}}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
     {{-- <link href="{{ asset('css/pe-icon-7-stroke.css') }}" rel="stylesheet" /> --}}
-    <link rel="stylesheet" href="{{asset('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')}}"> --}}
     {{-- <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
     <!-- iCheck -->
@@ -49,7 +49,8 @@
 
 <body class="hold-transition sidebar-mini layout-fixed ">
 
-    <!-- Preloader -->
-    {{-- <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div> --}}
+    <div id="app">
+        <!-- Preloader -->
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        </div> --}}

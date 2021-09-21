@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>Page de vente</h1>
+    
 </body>
 </html>

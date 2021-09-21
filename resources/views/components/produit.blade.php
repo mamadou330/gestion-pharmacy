@@ -353,8 +353,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+<<<<<<< HEAD
                                     @foreach($products as $product )
                                         <tr class="product">
+=======
+                                    @foreach($produits as $product )
+                                        <tr>
+>>>>>>> dev
                                             <td>{{  $product->id}}</td>
                                             <td>{{  $product->name}}</td>
                                             <td>{{  get_unite($product->name)}}</td>
@@ -532,4 +537,3 @@
         });
   </script> --}}
 @endpush 
-

@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header  navbar navbar-expand navbar-dark navbar-dark nav_menu" style="background-color: #2A2A3E; border-bottom-right-radius: 25px;">
+<nav class="main-header  navbar navbar-expand navbar-dark navbar-dark" style="background-color: #2A2A3E; border-bottom-right-radius: 25px;">
    <!-- Left navbar links -->
     <ul class="navbar-nav">
 		<li class="nav-item">
@@ -11,6 +11,12 @@
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{ route('contact') }}" class="nav-link">Contact</a>
 		</li>
+        {{-- <li class="nav-item d-none d-sm-inline-block">
+            <router-link to="/" class="nav-link">Home</router-link>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <router-link to="/tasks" class="nav-link">Task</router-link>
+        </li> --}}
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false">

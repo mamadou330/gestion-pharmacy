@@ -28,8 +28,8 @@ class AchatController extends Controller
             ['unite', true]
         ])->orderBy('name')->get();
 
-
-        return view('components.achat', compact('products', 'categories', 'familles', 'unites'));
+        $achat = Achat::all();
+        return view('components.achat', compact('products', 'categories', 'familles', 'unites', 'achat'));
     }
 
     /**

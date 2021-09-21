@@ -73,9 +73,14 @@
                 <p>Familles</p>
             </a>
         </li> --}}
+<<<<<<< HEAD
         {{-- <li class="nav-item">
             <a href="{{ route('produit.index') }}" class="nav-link">
 
+=======
+        <li class="nav-item">
+            <a href="@route('produit.index')" class="nav-link">
+>>>>>>> dev
                 <i class="nav-icon"></i>
                 <ion-icon name="archive-outline"></ion-icon>
                 <p>Produit</p>
