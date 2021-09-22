@@ -42,8 +42,8 @@ class OptionController extends Controller
         ]);
         
         $unite = Option::firstOrcreate(
-                ['name' =>$request->unite],
-                ['unite' => true]
+            ['name' =>$request->unite],
+            ['unite' => true]
         );
 
         return response()->json($unite);

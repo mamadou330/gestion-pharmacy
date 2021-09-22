@@ -1,23 +1,14 @@
 @extends('layouts.app')
 @push('page_css')
     <!-- DataTables -->
-    <link rel="stylesheet"
-          href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endpush
 @section('content')
     <section class="content">
 
         <div class="container-fluid">
-            <button type="button"
-                    class="btn btn-primary my-2"
-                    id="addFournisseur"
-                    data-toggle="modal"
-                    data-target="#fournisseurModal"
-                    data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
+            <button type="button" class="btn btn-primary my-2" id="addFournisseur" data-toggle="modal" data-target="#fournisseurModal"  data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -26,69 +17,67 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="fournisseurTable"
-                                   class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nom</th>
-                                        <th>Email</th>
-                                        <th>Téléphone</th>
-                                        <th>Adresse</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="row">
-                                    @foreach ($fournisseurs as $fournisseur)
-                                        <tr id="fid{{ $fournisseur->id }}">
-                                            <td>{{ $fournisseur->id }}</td>
-                                            <td>{{ $fournisseur->name }}</td>
-                                            <td>{{ $fournisseur->email }}</td>
-                                            <td>{{ $fournisseur->phone }}</td>
-                                            <td>{{ $fournisseur->address }}</td>
-                                            <td class="text-right py-0 align-middle action">
-                                                <div class="btn-group btn-group-sm">
-                                                    <a href="javascript:void(0)"
-                                                       role="button"
-                                                       class="btn btn-primary btn-xs viewFournisseur"
-                                                       data-toggle="modal"
-                                                       data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"
-                                                           data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Voir"></i></a>
-                                                    <a href="javascript:void(0)"
-                                                       role="button"
-                                                       class="btn btn-info btn-xs editFournisseur"
-                                                       data-bs-toggle="modal"
-                                                       data-bs-target="#fournisseurEditModal"
-                                                       data-bs-whatever="@fat"
-                                                       onclick="editFournisseur({{ $fournisseur->id }})"
-                                                       data-backdrop="static"
-                                                       data-keyboard="false">
-                                                        <i class="fas fa-pen"
-                                                           data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Modifier"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0)"
-                                                       role="button"
-                                                       class="btn btn-danger btn-xs deleteFournisseur"
-                                                       data-method="DELETE"
-                                                       data-confirm="Etes-vous sûr"
-                                                       onclick="deleteFournisseur({{ $fournisseur->id }})"><i
-                                                           class="fas fa-trash"
-                                                           data-toggle="tooltip"
-                                                           data-placement="left"
-                                                           title="Supprimer"></i></a>
-                                                </div>
-                                            </td>
+                            <div class="table-responsive">
+                                <table id="fournisseurTable" class="table table-hover table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Téléphone</th>
+                                            <th scope="col">Adresse</th>
+                                            <th scope="col">Action</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
+                                    </thead>
+                                    <tbody id="row">
+                                        @foreach ($fournisseurs as $fournisseur)
+                                            <tr id="fid{{ $fournisseur->id }}">
+                                                <th scope="row">{{ $fournisseur->id }}</th>
+                                                <td>{{ $fournisseur->name }}</td>
+                                                <td>{{ $fournisseur->email }}</td>
+                                                <td>{{ $fournisseur->phone }}</td>
+                                                <td>{{ $fournisseur->address }}</td>
+                                                <td class="text-right py-0 align-middle action">
+                                                    <div class="btn-group btn-group-sm">
+                                                        <a href="javascript:void(0)" role="button"
+                                                        class="btn btn-primary btn-xs viewFournisseur"
+                                                        data-toggle="modal"
+                                                        data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Voir"></i></a>
+                                                        <a href="javascript:void(0)" role="button"
+                                                        class="btn btn-info btn-xs editFournisseur"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#fournisseurEditModal"
+                                                        data-bs-whatever="@fat"
+                                                        onclick="editFournisseur({{ $fournisseur->id }})"
+                                                        data-backdrop="static"
+                                                        data-keyboard="false">
+                                                            <i class="fas fa-pen"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Modifier"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" role="button"
+                                                        class="btn btn-danger btn-xs deleteFournisseur"
+                                                        data-method="DELETE"
+                                                        data-confirm="Etes-vous sûr"
+                                                        onclick="deleteFournisseur({{ $fournisseur->id }})"><i
+                                                            class="fas fa-trash"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Supprimer"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot>
 
-                                </tfoot>
-                            </table>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -105,15 +94,9 @@
     <!-- Small modal -->
 
     {{-- BEGIN ADD FOURNISSEUR MODAL --}}
-    <div class="modal fade"
-         id="fournisseurModal"
-         tabindex="-1"
-         aria-labelledby="fournisseurModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="fournisseurModal" tabindex="-1" aria-labelledby="fournisseurModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
-            <form action="@route('fournisseur.store')"
-                  method="POST"
-                  id="fournisseurForm">
+            <form action="@route('fournisseur.store')" method="POST" id="fournisseurForm">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -121,10 +104,7 @@
                             id="fournisseurModalLabel"><i class="ml-2 fas fa-users"></i><span
                                   class="badge badge-pill badge-info text-center bg-indigo text-center mx-2 p-2">Ajouter un
                                 fournisseur </span></h5>
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close">
+                        <button type="button"class="close" data-dismiss="modal"  aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -133,13 +113,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            <input type="text"
-                                   name="name"
-                                   id="name"
-                                   class="form-control @error('name') is-invalid @enderror"
-                                   placeholder="Nom fournisseur">
-                            <span id="nameError"
-                                  class="text-danger"></span>
+                            <input type="text" name="name"id="name"class="form-control @error('name') is-invalid @enderror"
+                                placeholder="Nom fournisseur">
+                            <span id="nameError" class="text-danger"></span>
 
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -149,47 +125,27 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text"
-                                   name="phone"
-                                   id="phone"
-                                   class="form-control"
-                                   placeholder="+224 620-82-38-77">
-                            <span id="phoneError"
-                                  class="text-danger"></span>
+                            <input type="text"name="phone"id="phone" class="form-control">
+                            <span id="phoneError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-globe"></i></span>
                             </div>
-                            <input type="text"
-                                   name="address"
-                                   class="form-control"
-                                   id="address"
-                                   placeholder="Adresse">
-                            <span id="addressError"
-                                  class="text-danger"></span>
-
+                            <input type="text" name="address"  class="form-control"  id="address"  placeholder="Adresse">
+                            <span id="addressError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="email"
-                                   name="email"
-                                   id="email"
-                                   class="form-control"
-                                   placeholder="Email">
-                            <span id="emailError"
-                                  class="text-danger"></span>
-
+                            <input type="email"  name="email" id="email" class="form-control" placeholder="Email">
+                            <span id="emailError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-dismiss="modal">Fermer</button>
-                        <button type="submit"
-                                class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
+                        <button type="button" class="btn btn-danger"  data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                     </div>
                 </div>
             </form>
@@ -198,17 +154,11 @@
     {{-- END ADD FOURNISSEUR MODAL --}}
 
     {{-- BEGIN EDIT FOURNISSEUR MODAL --}}
-    <div class="modal fade"
-         id="fournisseurEditModal"
-         tabindex="-1"
-         aria-labelledby="fournisseurEditModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="fournisseurEditModal" tabindex="-1" aria-labelledby="fournisseurEditModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <form id="fournisseurEditForm">
                 @csrf
-                <input type="hidden"
-                       name="id"
-                       id="id">
+                <input type="hidden" name="id" id="id">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"
@@ -216,10 +166,7 @@
                             <span class="badge badge-pill badge-info bg-indigo text-center p-2">Modification du
                                 fournisseur</span>
                         </h5>
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close">
+                        <button type="button" class="close"  data-dismiss="modal"  aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -228,13 +175,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            <input type="text"
-                                   name="nameEdit"
-                                   id="nameEdit"
-                                   class="form-control @error('nameEdit') is-invalid @enderror">
-                            <span id="nameEditError"
-                                  class="text-danger"></span>
-
+                            <input type="text" name="nameEdit" id="nameEdit"  class="form-control @error('nameEdit') is-invalid @enderror">
+                            <span id="nameEditError"  class="text-danger"></span>
                             @error('nameEdit')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -243,44 +185,29 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text"
-                                   name="phoneEdit"
-                                   id="phoneEdit"
-                                   class="form-control">
-                            <span id="phoneEditError"
-                                  class="text-danger"></span>
+                            <input type="text" name="phoneEdit" id="phoneEdit" class="form-control">
+                            <span id="phoneEditError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-globe"></i></span>
                             </div>
-                            <input type="text"
-                                   name="addressEdit"
-                                   class="form-control"
-                                   id="addressEdit">
-                            <span id="addressEditError"
-                                  class="text-danger"></span>
+                            <input type="text" name="addressEdit" class="form-control" id="addressEdit">
+                            <span id="addressEditError"   class="text-danger"></span>
 
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="email"
-                                   name="emailEdit"
-                                   id="emailEdit"
-                                   class="form-control">
-                            <span id="emailEditError"
-                                  class="text-danger"></span>
+                            <input type="email" name="emailEdit" id="emailEdit" class="form-control">
+                            <span id="emailEditError"  class="text-danger"></span>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-dismiss="modal">Fermer</button>
-                        <button type="submit"
-                                class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                     </div>
                 </div>
             </form>
@@ -293,14 +220,10 @@
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
     <script>
         $(function() {
-
             $('#fournisseurTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -308,7 +231,7 @@
                 "ordering": true,
                 "info": true,
                 "autoWidth": true,
-                "responsive": true,
+                "responsive": true,       
             });
         });
     </script>
@@ -375,12 +298,12 @@
         $('#fournisseurForm').submit(function(e) {
             e.preventDefault();
 
-            let form = this;
-            let token = "{{ Session::token() }}";
-            let name = $('#name').val();
-            let phone = $('#phone').val();
-            let address = $('#address').val();
-            let email = $('#email').val();
+            // let form = this;
+            // let token = "{{ Session::token() }}";
+            // let name = $('#name').val();
+            // let phone = $('#phone').val();
+            // let address = $('#address').val();
+            // let email = $('#email').val();
 
             $.ajax({
                 url: $(this).attr('action'),
