@@ -99,10 +99,10 @@
     {{-- Famille modal  --}}
     <div class="col-6 col-md-3">
         <button type="button" class="bg-indigo border border-indigo-600 p-3 rounded-lg" data-toggle="modal"
-            data-target="#famille" data-whatever="@fat"><i class="fas fa-archive mx-1"></i> Ajouter une Famille</button>
-        <div class="modal fade" id="famille" tabindex="-1" aria-labelledby="familleLabel" aria-hidden="true">
+            data-target="#familleModal" data-whatever="@fat"><i class="fas fa-archive mx-1"></i> Ajouter une Famille</button>
+        <div class="modal fade" id="familleModal" tabindex="-1" aria-labelledby="familleLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
-                <form action="{{ route('famille.store')}}" method="POST">
+                <form action="@route('famille.store')" method="POST" id="familleForm">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
@@ -122,6 +122,7 @@
                                 <input type="text" name="famille"
                                     class="form-control @error('famille') is-invalid @enderror" placeholder="Ex: Sirop"
                                     required autofocus autocomplete>
+                                    <div class="text-danger" id="familleError"></div>
                                 @error('famille')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -369,22 +370,22 @@
 
 <script>
     $(function () {
-            $("#produit").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#produit_wrapper .col-md-6:eq(0)');
+        $("#produit").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#produit_wrapper .col-md-6:eq(0)');
 
-            //Date production
-            $('#date_production').datetimepicker({
-                format: 'L'
-            });
-
-            //Date d'expiration
-            $('#date_peremption').datetimepicker({
-                format: 'L'
-            });
-                
+        //Date production
+        $('#date_production').datetimepicker({
+            format: 'L'
         });
+
+        //Date d'expiration
+        $('#date_peremption').datetimepicker({
+            format: 'L'
+        });
+            
+    });
 </script>
 
 <script>
@@ -395,7 +396,6 @@
     
     $('#UniteForm').submit(function(e) {
         e.preventDefault();
-
 
         $.ajax({
             type: $(this).attr('method'),
@@ -416,19 +416,52 @@
 </script>
 
 <script>
+
+    $('#categorieModal').click(function() {
+        $('#categorieError').html('');
+    });
+
     $('#categorieForm').submit(function(e) {
+        e.preventDefault();
 
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
             data: new FormData(this),
             dataType: "json",
+            contentType: false,
+            processData: false,
             success: function (response) {
                 $('#categorieForm')[0].reset();
                 $('#categorieModal').modal('hide');
             },
             error: function(error)  {
-                $('#categorieError').text(error.responseJSON.error.categorie)
+                $('#categorieError').text(error.responseJSON.errors.categorie);
+            }
+        });
+    });
+</script>
+<script>
+    $('#familleModal').click(function() {
+        $('#familleError').html('');
+    });
+
+    $('#familleForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $('#familleForm')[0].reset();
+                $('#familleModal').modal('hide');
+            },
+            error: function(error) {
+                $('#familleError').text(error.responseJSON.errors.famille);
             }
         });
     });

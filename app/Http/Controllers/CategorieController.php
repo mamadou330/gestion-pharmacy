@@ -39,12 +39,13 @@ class CategorieController extends Controller
             'categorie' => 'required|string|min:3|max:255'
         ]);
 
-        Categorie::firstOrCreate(
+        $categorie = Categorie::firstOrCreate(
             ['categorieName' => $request->categorie],
             // ['user_id' => Auth::user()->id ]
         );
 
-        return back();
+        return response()->json($categorie);
+
     }
 
     /**

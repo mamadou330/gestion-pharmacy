@@ -40,12 +40,12 @@ class FamilleController extends Controller
             'famille' => 'required|string|min:3|max:255'
         ]);
 
-        Famille::firstOrCreate(
+        $famille = Famille::firstOrCreate(
             ['familleName' => $request->famille],
             // ['user_id' => Auth::user()->id ]
         );
 
-        return back();
+        return response()->json($famille);
     }
 
     /**
