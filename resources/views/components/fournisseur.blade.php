@@ -398,11 +398,7 @@
                             response.email = 'Fournisseur@gmail.com'
                         }
 
-                        // $('#nameError').html('');
-                        // $('#phoneError').html('');
-                        // $('#addressError').html('');
-                        // $('#emailError').html('');
-
+                     
                         $('#fournisseurForm')[0].reset();
                         $('#fournisseurModal').modal('hide');
                         getAllFournisseur();
