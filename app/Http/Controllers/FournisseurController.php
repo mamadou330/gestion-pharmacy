@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fournisseur;
+use App\Rules\EmailLowerRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -44,36 +45,11 @@ class FournisseurController extends Controller
             'name' => 'required|string|min:3|max:255',
             'address' => 'nullable|string|min:3|max:255',
             'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
-            'email' => 'nullable|email|string|min:3|max:255'
+            'email' => ['nullable', 'email', 'string', 'min:3', 'max:255', new EmailLowerRule]
         ]);
-        
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|min:3|max:255',
-        //     // 'address' => 'nullable|string|min:3|max:255',
-        //     'phone' => ['required', 'string', 'min:9', 'max:255', Rule::unique('fournisseurs')],
-        //     // 'email' => 'nullable|email|string|min:3|max:255'
-        // ]);
-
-        // if (!$validator->passes()) {
-        //     return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-            
-        // } else {
-        //     $fournisseur = Fournisseur::firstOrcreate(
-        //         ['name' => $request->name, 'phone' => $request->phone],
-        //         ['address' => $request->address, 'email' => $request->email]
-        //     );
-
-        //     if ($fournisseur) {
-        //         return response()->json($fournisseur, ['code' => 1, 'msg' => "Succcès, Votre founisseur a bien été enregistré"]);
-        //     } else {           
-        //         return response()->json(['code' => 0, 'msg' => "Erreur lors de l'enregistrement du fournisseur"]);
-        //     }
-            
-        // }
         
         $fournisseur = Fournisseur::create($request->only('name', 'phone', 'address', 'email'));
         return response()->json($fournisseur);
-        // return back();
     }
 
     /**
@@ -113,7 +89,7 @@ class FournisseurController extends Controller
             'name' => 'required|string|min:3|max:255',
             'address' => 'nullable|string|min:3|max:255',
             'phone' => ['required', 'string', 'min:9', 'max:255'],
-            'email' => 'nullable|email|string|min:3|max:255'
+            'email' => ['nullable', 'email', 'string', 'min:3', 'max:255', new EmailLowerRule]
         ]);
         
         $fournisseur = Fournisseur::findOrFail($request->id);
