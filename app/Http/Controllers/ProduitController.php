@@ -68,8 +68,8 @@ class ProduitController extends Controller
             'name' => $request->produit,
             'description' => $request->description,
             'unite_id' => $request->unite,
-            'categorie_id' => $request->categorie,
-            'famille_id' => $request->famille,
+            // 'categorie_id' => $request->categorie,
+            // 'famille_id' => $request->famille,
             'date_production' => $request->date_production,
             'date_peremption' => $request->date_peremption
         ]);

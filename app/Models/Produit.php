@@ -41,6 +41,27 @@ class Produit extends Model
     }
     
     /**
+     * boot
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($produit) {
+            $produit->categorie()->associate(request()->categorie);
+            $produit->famille()->associate(request()->famille);
+            // $produit->option()->associate(request()->unite);
+        });
+
+        self::updating(function ($produit) {
+            $produit->categorie()->associate(request()->categorie);
+            $produit->famille()->associate(request()->famille);
+        });
+    }
+    
+    /**
      * categorie
      *
      * @return BelongsTo
