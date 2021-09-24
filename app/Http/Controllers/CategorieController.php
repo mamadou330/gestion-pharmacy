@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class CategorieController extends Controller
 {
@@ -92,4 +93,12 @@ class CategorieController extends Controller
     {
         //
     }
+
+    public function getAllCategories()
+    {
+        $categories = Categorie::latest()->get();
+
+        return response()->json($categories);
+    }
+    
 }

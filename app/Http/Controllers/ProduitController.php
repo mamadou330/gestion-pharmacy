@@ -22,7 +22,7 @@ class ProduitController extends Controller
 
         $familles = Famille::orderBy('FamilleName')->get();
 
-        $produits = Produit::with(['categorie', 'famille', 'option'])->get();
+        $produits = Produit::with(['categorie', 'famille', 'option'])->latest()->get();
         
         $unites = Option::where([
             ['unite', true]
@@ -64,16 +64,18 @@ class ProduitController extends Controller
         //     return response()->json('errors', $data);
         // }
         
-        $produit = Produit::create([
-            'name' => $request->produit,
-            'description' => $request->description,
-            'unite_id' => $request->unite,
-            // 'categorie_id' => $request->categorie,
-            // 'famille_id' => $request->famille,
-            'date_production' => $request->date_production,
-            'date_peremption' => $request->date_peremption
-        ]);
-        return back();
+        // $produit = Produit::create([
+        //     'produit' => $request->produit,
+        //     'description' => $request->description,
+        //     'unite' => $request->unite,
+        //     'date_production' => $request->date_production,
+        //     'date_peremption' => $request->date_peremption
+        // ]);
+
+        $produit = Produit::create($request->only(
+            'produit', 'description', 'unite', 'date_production', 'date_peremption')
+        );
+        return response()->json($produit);
     }
 
     /**
@@ -121,7 +123,10 @@ class ProduitController extends Controller
         //
     }
 
-    // public function addProduct() {
-        
-    // }
+    public function getAllProducts() 
+    {
+        $produits = Produit::with(['categorie', 'famille', 'option'])->latest()->get();
+
+        return response()->json($produits);
+    }
 }

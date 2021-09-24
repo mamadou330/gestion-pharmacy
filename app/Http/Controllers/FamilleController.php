@@ -92,4 +92,10 @@ class FamilleController extends Controller
     {
         //
     }
+
+    public function getAllFamilles()
+    {
+        $familles = Famille::latest()->get();
+        return response()->json($familles);
+    }
 }

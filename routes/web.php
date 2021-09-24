@@ -37,8 +37,12 @@ Auth::routes();
 
 
 Route::get('fournisseurs', [FournisseurController::class, 'getAllFournisseur'])->name('fournisseur.all');
+Route::get('produits', [ProduitController::class, 'getAllProducts'])->name('product.all');
+Route::get('unites', [OptionController::class, 'getAllUnites'])->name('unite.all');
+Route::get('categories', [CategorieController::class, 'getAllCategories'])->name('categorie.all');
+Route::get('familles', [FamilleController::class, 'getAllFamilles'])->name('familles.all');
+
 Route::resource('fournisseur', FournisseurController::class);
-// Route::post('addProduct', [ProduitController::class, 'addProduct'])->name('addProduct');
 Route::resource('produit', ProduitController::class);
 Route::resource('option', OptionController::class);
 Route::resource('categorie', CategorieController::class);

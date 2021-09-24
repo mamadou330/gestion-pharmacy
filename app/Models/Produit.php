@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Produit extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
 
-    protected $fillable = ['name', 'slug', 'description', 'unite_id', 'categorie_id', 'famille_id', 'date_production', 'date_peremption'];
+    protected $fillable = ['produit', 'slug', 'description', 'unite', 'categorie_id', 'famille_id', 'date_production', 'date_peremption'];
     
     /**
      * The attributes that should be cast to native types.
@@ -35,7 +37,7 @@ class Produit extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'produit'
             ]
         ];
     }
@@ -114,14 +116,37 @@ class Produit extends Model
 
     
     /**
-     * getNameAttribute
+     * getProduitAttribute
      *
      * @param  mixed $value
      * @return void
      */
-    public function getNameAttribute($value)
+    public function getProduitAttribute($value)
     {
-        return ucfirst($value);
+        return Str::title($value);
+    }
+
+    /**
+     * getdateProductionAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function getdateProductionAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');;
+    }
+
+
+    /**
+     * getdatePeremptionAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function getdatePeremptionAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');;
     }
 
     // public function getDateProductionAttribute($value)

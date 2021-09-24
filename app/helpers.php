@@ -3,7 +3,6 @@
 use App\Models\Categorie;
 use App\Models\Option;
 use App\Models\Produit;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 if(!function_exists('page_title')) {
@@ -21,14 +20,14 @@ if(!function_exists('page_active')) {
 
 if(!function_exists('get_unite')) {
     function get_unite($produit) {
-        $product_unite = Produit::select('unite_id')
-                        ->where('name', $produit)
+        $product_unite = Produit::select('unite')
+                        ->where('produit', $produit)
                         ->first();
 
         $unite = Option::select('name')
             ->where([
                 ['unite', true],
-                ['id', $product_unite ? $product_unite->unite_id : null]
+                ['id', $product_unite ? $product_unite->unite : null]
             ])->first();
 
         return $unite ? $unite->name : null;

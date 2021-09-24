@@ -93,4 +93,14 @@ class OptionController extends Controller
     {
         //
     }
+
+
+    public function getAllUnites()
+    {
+        $unites = Option::where([
+            ['unite', true]
+        ])->orderBy('name')->get();
+        
+        return response()->json($unites);
+    }
 }

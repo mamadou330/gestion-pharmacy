@@ -50,11 +50,11 @@ class ProductRequest extends FormRequest
 
             'date_production.required' => 'La date de production est obligatoire.',
             'date_production.date' => "La date de production n'est pas une date valide.",
-            'date_production.before' => "La date de production doit être avant la date d'expiration du produit.",
+            'date_production.before' => "La date de production doit être avant la date d'éxpiration du produit.",
 
-            'date_peremption.required' => 'La date de production est obligatoire.',
+            'date_peremption.required' => 'La date d\'éxpiration est obligatoire.',
             'date_peremption.date' => "La date de production n'est pas une date valide.",
-            'date_peremption.after' => "La date d'expiration doit être après la date de production du produit.",
+            'date_peremption.after' => "La date d'éxpiration doit être après la date de production du produit.",
         ];
     }
 }
