@@ -3,12 +3,14 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    {{-- PARSLEY CSS --}}
+    <link rel="stylesheet" href="{{ asset('libraries/parsley/main.css') }}">
 @endpush
 @section('content')
     <section class="content">
 
         <div class="container-fluid">
-            <button type="button" class="btn btn-primary my-2" id="addFournisseur" data-toggle="modal" data-target="#fournisseurModal"  data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
+            <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#fournisseurModal"  data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -40,34 +42,24 @@
                                                 <td class="text-right py-0 align-middle action">
                                                     <div class="btn-group btn-group-sm">
                                                         <a href="javascript:void(0)" role="button"
-                                                        class="btn btn-primary btn-xs viewFournisseur"
-                                                        data-toggle="modal"
-                                                        data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="Voir"></i></a>
+                                                            class="btn btn-primary btn-xs showFournisseur"
+                                                            data-toggle="modal"
+                                                            data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"
+                                                            data-toggle="tooltip" data-placement="top" title="Voir"></i></a>
                                                         <a href="javascript:void(0)" role="button"
-                                                        class="btn btn-info btn-xs editFournisseur"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#fournisseurEditModal"
-                                                        data-bs-whatever="@fat"
-                                                        onclick="editFournisseur({{ $fournisseur->id }})"
-                                                        data-backdrop="static"
-                                                        data-keyboard="false">
-                                                            <i class="fas fa-pen"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
+                                                            class="btn btn-info btn-xs editFournisseur" data-bs-toggle="modal"
+                                                            data-bs-target="#fournisseurEditModal" data-bs-whatever="@fat"
+                                                            onclick="editFournisseur({{ $fournisseur->id }})"
+                                                            data-backdrop="static" data-keyboard="false">
+                                                            <i class="fas fa-pen" data-toggle="tooltip" data-placement="top"
                                                             title="Modifier"></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" role="button"
-                                                        class="btn btn-danger btn-xs deleteFournisseur"
-                                                        data-method="DELETE"
-                                                        data-confirm="Etes-vous sûr"
-                                                        onclick="deleteFournisseur({{ $fournisseur->id }})"><i
-                                                            class="fas fa-trash"
-                                                            data-toggle="tooltip"
-                                                            data-placement="left"
-                                                            title="Supprimer"></i></a>
+                                                        <a href="javascript:void(0)" role="button" class="btn btn-danger btn-xs deleteFournisseur"
+                                                            data-method="DELETE" data-confirm="Etes-vous sûr"
+                                                            onclick="deleteFournisseur({{ $fournisseur->id }})"><i
+                                                            class="fas fa-trash" data-toggle="tooltip" data-placement="left"
+                                                            title="Supprimer"></i>
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -114,7 +106,7 @@
                                 <span class="input-group-text">@</span>
                             </div>
                             <input type="text" name="name"id="name"class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Nom fournisseur">
+                                placeholder="Nom fournisseur" required data-parsley-minlength="3">
                             <span id="nameError" class="text-danger"></span>
 
                             @error('name')
@@ -125,21 +117,23 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text"name="phone"id="phone" class="form-control">
+                            <input type="text"name="phone"id="phone" class="form-control" required data-parsley-minlength="8">
                             <span id="phoneError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-globe"></i></span>
                             </div>
-                            <input type="text" name="address"  class="form-control"  id="address"  placeholder="Adresse">
+                            <input type="text" name="address"  class="form-control"  id="address"  
+                                placeholder="Adresse" >
                             <span id="addressError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="email"  name="email" id="email" class="form-control" placeholder="Email">
+                            <input type="email"  name="email" id="email" class="form-control" placeholder="Email"
+                               data-parsley-trigger="keypress">
                             <span id="emailError" class="text-danger"></span>
                         </div>
                     </div>
@@ -156,17 +150,17 @@
     {{-- BEGIN EDIT FOURNISSEUR MODAL --}}
     <div class="modal fade" id="fournisseurEditModal" tabindex="-1" aria-labelledby="fournisseurEditModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
-            <form id="fournisseurEditForm">
+            <form id="fournisseurEditForm" action="@route('fournisseur.update', $fournisseur)" method="POST">
+                @method('PUT')
                 @csrf
                 <input type="hidden" name="id" id="id">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"
-                            id="fournisseurEditModalLabel">
+                        <h5 class="modal-title" id="fournisseurEditModalLabel">
                             <span class="badge badge-pill badge-info bg-indigo text-center p-2">Modification du
                                 fournisseur</span>
                         </h5>
-                        <button type="button" class="close"  data-dismiss="modal"  aria-label="Close">
+                        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -222,6 +216,11 @@
     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('libraries/parsley/parsley.min.js') }}"  type="text/javascript"></script>
+    <script src="{{ asset('libraries/parsley/langue/fr.js') }}"  type="text/javascript"></script>
+    <script>
+        window.ParsleyValidator.setLocale('fr');
+    </script>
     <script>
         $(function() {
             $('#fournisseurTable').DataTable({
@@ -242,13 +241,12 @@
         //     }
         // });
 
-        $('#addFournisseur').click(function() {
+        $('#fournisseurModal').click(function() {
             $('#nameError').html('');
             $('#phoneError').html('');
             $('#addressError').html('');
             $('#emailError').html('');
         });
-
 
         function getAllFournisseur() {
             $.ajax({
@@ -273,7 +271,7 @@
                         data = data + '<td class="text-right py-0 align-middle action">'
                         data = data + '<div class="btn-group btn-group-sm">'
                         data = data +
-                            '<a href="javascript:void(0)" role="button" class="btn btn-primary btn-xs viewFournisseur" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"data-toggle="tooltip" data-placement="top" title="Voir"></i></a>'
+                            '<a href="javascript:void(0)" role="button" class="btn btn-primary btn-xs showFournisseur" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"data-toggle="tooltip" data-placement="top" title="Voir"></i></a>'
                         data = data +
                             '<a href="javascript:void(0)" role="button" class="btn btn-info btn-xs editFournisseur" data-bs-toggle="modal" data-bs-target="#fournisseurEditModal" data-bs-whatever="@fat"onclick="editFournisseur(' +
                             value.id +
