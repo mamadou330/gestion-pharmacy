@@ -144,7 +144,7 @@
     {{-- Produit modal  --}}
     <div class="col-6 col-md-3">
         <button type="button" class="bg-indigo border border-indigo-600 p-3 rounded-lg" data-toggle="modal"
-            data-target="#addProductModal" data-whatever="@fat"><i class="fas fa-cart-plus mx-1"></i> Ajouter un
+            data-target="#addProductModal" onclick="buttonProductModal()" data-whatever="@fat"><i class="fas fa-cart-plus mx-1"></i> Ajouter un
             Produit</button>
         <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="produitLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
@@ -189,7 +189,7 @@
                                     <label><i class="fas fa-folder-plus text-indigo mx-2"></i>Catégorie <i class="text-danger">*</i></label>
                                     <select class="form-control select2 @error('categorie') is-invalid @enderror" id="category" style="width: 100%;" name="categorie">
                                         @foreach($categories as $categorie )
-                                            <option value="{{  $categorie->id}}">{{  $categorie->categorieName}}</option>
+                                            <option value="{{  $categorie->id }}">{{ $categorie->categorieName }}</option>
                                         @endforeach
                                         <span class="text-danger" id="categorieError"></span>
                                         @error('categorie')
@@ -201,7 +201,7 @@
                                     <label><i class="fas fa-archive text-indigo mx-2"></i>Famille <i class="text-danger">*</i></label>
                                     <select class="form-control @error('famille') is-invalid @enderror select2" id="familly" style="width: 100%;" name="famille">
                                         @foreach($familles as $famille )
-                                            <option value="{{  $famille->id }}">{{  $famille->familleName }}</option>
+                                            <option value="{{  $famille->id }}">{{ $famille->familleName }}</option>
                                         @endforeach
                                         <span class="text-danger" id="familleError"></span>
                                         @error('famille')
@@ -296,17 +296,17 @@
                                 </tr>
                             </thead>
                             <tbody id="row">
-                                {{-- @foreach($produits as $product )
+                                @foreach($produits as $product )
                                     <tr id="pid{{ $product->id }}">
                                         <th scope="row">{{  $product->id }}</th>
                                         <td>{{  $product->produit }}</td>
                                         <td>{{  get_unite($product->produit) }}</td>
                                         <td>{{  $product->categorie->categorieName }}</td>
                                         <td>{{  $product->famille->familleName }}</td>
-                                        <td>{{  $product->date_production->translatedFormat('d-F-Y') }}</td>
-                                        <td>{{  $product->date_peremption->translatedFormat('d-F-Y') }}</td>
+                                        <td>{{  $product->date_production }}</td>
+                                        <td>{{  $product->date_peremption }}</td>
                                         <td class="text-right py-0 align-middle action">
-                                            <div class="btn-group btn-group-sm">
+                                            {{-- <div class="btn-group btn-group-sm"> --}}
                                                 <a href="javascript:void(0)" role="button"
                                                     class="btn btn-primary btn-xs showProduct"
                                                     data-toggle="modal"
@@ -326,10 +326,10 @@
                                                     class="fas fa-trash" data-toggle="tooltip" data-placement="left"
                                                     title="Supprimer"></i>
                                                 </a> 
-                                            </div>
+                                            {{-- </div> --}}
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -408,6 +408,7 @@
         $('#familleError').html('');
     });
 
+   
     function getAllProducts() {
         $.ajax({
             type: "GET",
@@ -415,11 +416,12 @@
             url: "@route('product.all')",
             success: function(response) {
                 let data = "";
-                $.each(response, function(key, value) {                 
+                $.each(response, function(key, value) {
+                    console.log(value)                 
                     data = data + '<tr id="pid(' + value.id + ')">'
                         data = data + "<th scope='row'>" + value.id + "</>"
                         data = data + "<td>" + value.produit + "</td>"
-                        data = data + "<td>" + value.unite + "</td>"
+                        data = data + "<td>" + value.option.name + "</td>"
                         data = data + "<td>" + value.categorie.categorieName + "</td>"
                         data = data + "<td>" + value.famille.familleName + "</td>"
                         data = data + "<td>" + value.date_production + "</td>"
@@ -501,6 +503,7 @@
         });
     }
 
+
     
     $('#UniteForm').submit(function(e) {
         e.preventDefault();
@@ -568,12 +571,14 @@
         });
     });
    
-
-    $('#addProductModal').click(function() {
+    function buttonProductModal() {
         getAllUnites();
         getAllCategories();
         getAllFamilles();
 
+    }
+
+    $('#addProductModal').click(function() {
         $('#nameError').html('');
         $('#uniteError').html('');
         $('#categorieError').html('');

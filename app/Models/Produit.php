@@ -15,7 +15,7 @@ class Produit extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
 
-    protected $fillable = ['produit', 'slug', 'description', 'unite', 'categorie_id', 'famille_id', 'date_production', 'date_peremption'];
+    protected $fillable = ['produit', 'slug', 'description', 'option_id', 'categorie_id', 'famille_id', 'date_production', 'date_peremption'];
     
     /**
      * The attributes that should be cast to native types.
@@ -54,12 +54,13 @@ class Produit extends Model
         self::creating(function ($produit) {
             $produit->categorie()->associate(request()->categorie);
             $produit->famille()->associate(request()->famille);
-            // $produit->option()->associate(request()->unite);
+            $produit->option()->associate(request()->unite);
         });
 
         self::updating(function ($produit) {
             $produit->categorie()->associate(request()->categorie);
             $produit->famille()->associate(request()->famille);
+            $produit->option()->associate(request()->unite);
         });
     }
     

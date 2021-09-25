@@ -73,7 +73,7 @@ class ProduitController extends Controller
         // ]);
 
         $produit = Produit::create($request->only(
-            'produit', 'description', 'unite', 'date_production', 'date_peremption')
+            'produit', 'description', 'date_production', 'date_peremption')
         );
         return response()->json($produit);
     }
