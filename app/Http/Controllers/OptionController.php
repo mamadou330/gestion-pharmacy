@@ -37,7 +37,7 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'unite' => 'required|string|min:2',
+            'unite' => 'required|string|min:2|max:50',
            
         ]);
         

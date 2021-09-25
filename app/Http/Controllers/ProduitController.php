@@ -50,28 +50,6 @@ class ProduitController extends Controller
     public function store(ProductRequest $request)
     {
 
-        // $request->validate([
-        //     'produit' => 'required|string|min:2|max:255',
-        //     'description' => 'nullable|string|min:2|max:255',
-        //     'unite' =>  'nullable|integer',
-        //     'categorie' => 'nullable|integer',
-        //     'famille' => 'nullable|integer',
-        //     'date_production' => 'required|date|before:date_peremption',
-        //     'date_peremption' => 'required|date|after:date_production' 
-        // ]);
-        
-        // if(!$data) {
-        //     return response()->json('errors', $data);
-        // }
-        
-        // $produit = Produit::create([
-        //     'produit' => $request->produit,
-        //     'description' => $request->description,
-        //     'unite' => $request->unite,
-        //     'date_production' => $request->date_production,
-        //     'date_peremption' => $request->date_peremption
-        // ]);
-
         $produit = Produit::create($request->only(
             'produit', 'description', 'date_production', 'date_peremption')
         );

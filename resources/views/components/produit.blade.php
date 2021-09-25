@@ -12,6 +12,7 @@
 @endpush
 @section('content')
 <div class="row m-4">
+    
     {{-- Option Unité modal  --}}
     <div class="col-6 col-md-3">
         <button type="button" class="bg-indigo border border-indigo-600 p-3 rounded-lg" data-toggle="modal"
@@ -417,7 +418,6 @@
             success: function(response) {
                 let data = "";
                 $.each(response, function(key, value) {
-                    console.log(value)                 
                     data = data + '<tr id="pid(' + value.id + ')">'
                         data = data + "<th scope='row'>" + value.id + "</>"
                         data = data + "<td>" + value.produit + "</td>"
