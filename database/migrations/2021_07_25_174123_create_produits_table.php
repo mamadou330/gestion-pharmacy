@@ -2,6 +2,8 @@
 
 use App\Models\Categorie;
 use App\Models\Famille;
+use App\Models\Option;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,22 +23,22 @@ class CreateProduitsTable extends Migration
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
             $table->string('avatar')->nullable();
-            $table->foreignId('user_id')
+            $table->foreignIdFor(User::class)
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('unite')
+            $table->foreignIdFor(Option::class)
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('categorie_id')
+            $table->foreignIdFor(Categorie::class)
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('famille_id')
+            $table->foreignIdFor(Famille::class)
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
