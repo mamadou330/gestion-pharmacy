@@ -4,11 +4,13 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     {{-- PARSLEY CSS --}}
-    <link rel="stylesheet" href="{{ asset('libraries/parsley/main.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('libraries/parsley/main.css') }}"> --}}
 @endpush
 @section('content')
+    @php
+        $fournisseur = session('fournisseur');
+    @endphp
     <section class="content">
-
         <div class="container-fluid">
             <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#fournisseurModal"  data-whatever="@fat"><i class="fas fa-users mx-1"></i> Fournisseurs</button>
             <div class="row">
@@ -150,61 +152,65 @@
     {{-- BEGIN EDIT FOURNISSEUR MODAL --}}
     <div class="modal fade" id="fournisseurEditModal" tabindex="-1" aria-labelledby="fournisseurEditModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
-            <form id="fournisseurEditForm" action="@route('fournisseur.update', $fournisseur)" method="POST">
-                @method('PUT')
-                @csrf
-                <input type="hidden" name="id" id="id">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="fournisseurEditModalLabel">
-                            <span class="badge badge-pill badge-info bg-indigo text-center p-2">Modification du
-                                fournisseur</span>
-                        </h5>
-                        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">@</span>
-                            </div>
-                            <input type="text" name="nameEdit" id="nameEdit"  class="form-control @error('nameEdit') is-invalid @enderror">
-                            <span id="nameEditError"  class="text-danger"></span>
-                            @error('nameEdit')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+            @if($fournisseur)
+                <form id="fournisseurEditForm" action="@route('fournisseur.update', $fournisseur)" method="POST">
+            @else
+                <form id="fournisseurEditForm" method="POST">
+            @endif
+                    @method('PUT')
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="fournisseurEditModalLabel">
+                                <span class="badge badge-pill badge-info bg-indigo text-center p-2">Modification du
+                                    fournisseur</span>
+                            </h5>
+                            <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input type="text" name="nameEdit" id="nameEdit"  class="form-control @error('nameEdit') is-invalid @enderror">
+                                <span id="nameEditError"  class="text-danger"></span>
+                                @error('nameEdit')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <input type="text" name="phoneEdit" id="phoneEdit" class="form-control">
-                            <span id="phoneEditError" class="text-danger"></span>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <input type="text" name="phoneEdit" id="phoneEdit" class="form-control">
+                                <span id="phoneEditError" class="text-danger"></span>
                             </div>
-                            <input type="text" name="addressEdit" class="form-control" id="addressEdit">
-                            <span id="addressEditError"   class="text-danger"></span>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                </div>
+                                <input type="text" name="addressEdit" class="form-control" id="addressEdit">
+                                <span id="addressEditError"   class="text-danger"></span>
 
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="email" name="emailEdit" id="emailEdit" class="form-control">
-                            <span id="emailEditError"  class="text-danger"></span>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input type="email" name="emailEdit" id="emailEdit" class="form-control">
+                                <span id="emailEditError"  class="text-danger"></span>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
-                    </div>
-                </div>
-            </form>
+                </form>
         </div>
     </div>
     {{-- END EDIT FOURNISSEUR MODAL --}}
@@ -216,11 +222,11 @@
     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('libraries/parsley/parsley.min.js') }}"  type="text/javascript"></script>
+    {{-- <script src="{{ asset('libraries/parsley/parsley.min.js') }}"  type="text/javascript"></script>
     <script src="{{ asset('libraries/parsley/langue/fr.js') }}"  type="text/javascript"></script>
     <script>
         window.ParsleyValidator.setLocale('fr');
-    </script>
+    </script> --}}
     <script>
         $(function() {
             $('#fournisseurTable').DataTable({
@@ -263,7 +269,7 @@
                             value.email = 'Fournisseur@gmail.com'
                         }
                         data = data + '<tr id="fid(' + value.id + ')">'
-                        data = data + "<td>" + value.id + "</td>"
+                        data = data + "<th scope='row'>" + value.id + "</th>"
                         data = data + "<td>" + value.name + "</td>"
                         data = data + "<td>" + value.email + "</td>"
                         data = data + "<td>" + value.phone + "</td>"
@@ -286,7 +292,6 @@
 
                     });
                     $('#row').html(data);
-                    // window.location.reload();
                 }
             });
         }
@@ -295,13 +300,6 @@
 
         $('#fournisseurForm').submit(function(e) {
             e.preventDefault();
-
-            // let form = this;
-            // let token = "{{ Session::token() }}";
-            // let name = $('#name').val();
-            // let phone = $('#phone').val();
-            // let address = $('#address').val();
-            // let email = $('#email').val();
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -318,11 +316,6 @@
                         if (response.email === null) {
                             response.email = 'Fournisseur@gmail.com'
                         }
-
-                        // $('#nameError').html('');
-                        // $('#phoneError').html('');
-                        // $('#addressError').html('');
-                        // $('#emailError').html('');
 
                         $('#fournisseurForm')[0].reset();
                         $('#fournisseurModal').modal('hide');

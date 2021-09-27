@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Fournisseur;
 use App\Rules\EmailLowerRule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class FournisseurController extends Controller
@@ -60,7 +59,7 @@ class FournisseurController extends Controller
      */
     public function show(Fournisseur $fournisseur)
     {
-        //
+        return view('components.fournisseur', compact('fournisseur'));
     }
 
     /**
