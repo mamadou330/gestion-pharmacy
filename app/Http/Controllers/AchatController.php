@@ -18,7 +18,7 @@ class AchatController extends Controller
      */
     public function index()
     {
-        $products = Produit::orderBy('name')->get();
+        $products = Produit::orderBy('produit')->get();
 
         $categories = Categorie::orderBy('CategorieName')->get();
 

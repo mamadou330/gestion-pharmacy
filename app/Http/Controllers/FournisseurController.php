@@ -16,9 +16,8 @@ class FournisseurController extends Controller
      */
     public function index()
     {
-        $fournisseurs = Fournisseur::all(); 
-
-        
+        $fournisseurs = Fournisseur::latest()->get(); 
+                
         return view('components.fournisseur', compact('fournisseurs'));
     }
 

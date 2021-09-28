@@ -19,8 +19,9 @@
                 <h5 class="col-md-12 text-center my-2 display-6 mb-5"> <b class="bg-indigo p-2 rounded m-2"><i
                             class="fas fa-ship p-1"></i>Page de commande</b></h5>
                 <button type="button" class="btn-sm bg-indigo float-left border border-indigo-600 p-2 rounded-lg"
-                    data-toggle="modal" data-target="#productModal" data-whatever="@fat"><i
-                        class="fas fa-cart-plus mx-1"></i>Nouveau Produit</button>
+                    data-toggle="modal" data-target="#addProductModal" onclick="buttonProductModal()" data-whatever="@fat"><i
+                    class="fas fa-cart-plus mx-1"></i>Nouveau Produit
+                </button>
                 <button type="button" class="btn-sm float-right bg-indigo border border-indigo-600 p-2 rounded-lg"
                     data-toggle="modal" data-target="#fournisseurModal" data-whatever="@fat"><i
                         class="fas fa-user mx-1"></i>Nouveau Fournisseur</button>
@@ -142,17 +143,18 @@
         <div class="row">
             <div id="jsGrid"></div>
         </div>
-        {{-- Produit Modal  --}}
+        {{-- Produit modal  --}}
         <div class="col-6 col-md-3">
-            <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="produitLabel" aria-hidden="true">
+            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="produitLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md">
-                    <form action="{{ route('produit.store') }}" method="POST">
+                    <form action="{{ route('produit.store')}}" method="POST" id="addProduitForm">
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="produitLabel"><i class="ml-2 fas fa-cart-plus"></i><span
-                                        class="badge badge-info bg-indigo  offset-md-3 mx-5 text-lg p-2">Ajouter un Produit
-                                    </span></h5>
+                                <h5 class="modal-title justify-content-beetween text-center" id="produitLabel"><i
+                                        class="ml-2 fas fa-cart-plus"></i><span
+                                        class="badge badge-info bg-indigo text-center mx-4 p-2">Ajouter un Produit </span>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -162,50 +164,47 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cart-plus"></i></span>
                                     </div>
-                                    <input type="text" name="produit"
-                                        class="form-control @error('produit') is-invalid @enderror" value="{{ old('produit') }}"
-                                        placeholder="Ex: Paracetamol" required autofocus autocomplete>
+                                    <input type="text" name="produit" id="produit" class="form-control @error('produit') is-invalid @enderror"
+                                        value="{{ old('produit')}}" placeholder="Ex: Paracetamol" autofocus autocomplete>
+                                    <span class="text-danger" id="nameErrorProduit"></span> 
                                     @error('produit')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="row mt-3">
                                     <div class="form-group col-3">
-                                        <label><i class="fas fa-gift text-indigo mx-2"></i>Unité <i
-                                                class="text-danger">*</i></label>
-                                        <select class="form-control select2 @error('unite') is-invalid @enderror"
-                                            style="width: 100%;" name="unite">
-                                            @foreach($unites as $unite)
-                                            <option value="{{  $unite->id }}">{{ $unite->name}}</option>
+                                        <label><i class="fas fa-gift text-indigo mx-2"></i>Unité <i class="text-danger">*</i></label>
+                                        <select class="form-control select2 @error('unite') is-invalid @enderror" id="unity" style="width: 100%;" name="unite">
+                                            @foreach($unites as $unite )
+                                                <option value="{{  $unite->id }}">{{ $unite->name}}</option>
                                             @endforeach
+                                            <span class="text-danger" id="uniteError"></span>
                                             @error('unite')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </select>
                                     </div>
                                     <div class="form-group col-4">
-                                        <label><i class="fas fa-folder-plus text-indigo mx-2"></i>Catégorie <i
-                                                class="text-danger">*</i></label>
-                                        <select class="form-control select2 @error('categorie') is-invalid @enderror"
-                                            style="width: 100%;" name="categorie">
-                                            @foreach($categories as $categorie)
-                                            <option value="{{  $categorie->id}}">{{  $categorie->categorieName}}</option>
+                                        <label><i class="fas fa-folder-plus text-indigo mx-2"></i>Catégorie <i class="text-danger">*</i></label>
+                                        <select class="form-control select2 @error('categorie') is-invalid @enderror" id="category" style="width: 100%;" name="categorie">
+                                            @foreach($categories as $categorie )
+                                                <option value="{{  $categorie->id }}">{{ $categorie->categorieName }}</option>
                                             @endforeach
+                                            <span class="text-danger" id="categorieError"></span>
                                             @error('categorie')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </select>
                                     </div>
                                     <div class="form-group col-5">
-                                        <label><i class="fas fa-archive text-indigo mx-2"></i>Famille <i
-                                                class="text-danger">*</i></label>
-                                        <select class="form-control @error('famille') is-invalid @enderror select2"
-                                            style="width: 100%;" name="famille">
-                                            @foreach($familles as $famille)
-                                            <option value="{{  $famille->id}}">{{  $famille->familleName}}</option>
+                                        <label><i class="fas fa-archive text-indigo mx-2"></i>Famille <i class="text-danger">*</i></label>
+                                        <select class="form-control @error('famille') is-invalid @enderror select2" id="familly" style="width: 100%;" name="famille">
+                                            @foreach($familles as $famille )
+                                                <option value="{{  $famille->id }}">{{ $famille->familleName }}</option>
                                             @endforeach
+                                            <span class="text-danger" id="familleError"></span>
                                             @error('famille')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </select>
                                     </div>
@@ -217,30 +216,32 @@
                                             <div class="input-group date" id="date_production" data-target-input="nearest">
                                                 <input type="text" name="date_production"
                                                     class="form-control datetimepicker-input @error('date_production') is-invalid @enderror"
-                                                    value="{{ old('date_production') }}" data-target="#date_production" />
+                                                    value="{{ old('date_production')}}" data-target="#date_production" />
                                                 <div class="input-group-append" data-target="#date_production"
                                                     data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
+                                                <span class="text-danger" id="dateProdError"></span>
                                                 @error('date_production')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Date d'éxpiration</label>
+                                            <label>Date de d'éxpiration</label>
                                             <div class="input-group date" id="date_peremption" data-target-input="nearest">
                                                 <input type="text" name="date_peremption"
                                                     class="form-control datetimepicker-input @error('date_peremption') is-invalid @enderror"
-                                                    value="{{ old('date_peremption') }}" data-target="#date_peremption" />
+                                                    value="{{ old('date_peremption')}}" data-target="#date_peremption" />
                                                 <div class="input-group-append" data-target="#date_peremption"
                                                     data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
+                                                <span class="text-danger" id="dateExpError"></span>
                                                 @error('date_peremption')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -248,18 +249,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="col-form-label">Description</label>
-                                    <textarea name="description" class="form-control @error('description') is-invalid @enderror"
-                                        id="description" autofocus autocomplete>{{old('description') }}</textarea>
+                                    <textarea name="description"
+                                        class="form-control @error('description') is-invalid @enderror" id="description"
+                                        autofocus autocomplete>{{old('description') }}</textarea>
+                                    <span class="text-danger" id="descripExpError"></span>
                                     @error('description')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary bg-indigo"><i
-                                    class="fas fa-save mx-1"></i>Enregistrer
-                                </button>
+                                    class="fas fa-save mx-1"></i>Enregistrer</button>
                             </div>
                         </div>
                     </form>
@@ -268,18 +270,18 @@
         </div>
         {{-- /.Produit Modal --}}
 
-        {{-- Fournisseur Modal --}}
+        {{-- BEGIN ADD FOURNISSEUR MODAL --}}
         <div class="modal fade" id="fournisseurModal" tabindex="-1" aria-labelledby="fournisseurModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
-                <form action="{{ route('fournisseur.store') }}" method="POST">
+                <form action="@route('fournisseur.store')" method="POST" id="fournisseurForm">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title justify-content-beetween" id="fournisseurModalLabel"><i
-                                    class="ml-2 fas fa-users"></i><span
-                                    class="badge badge-pill badge-info bg-indigo text-center mx-2 p-2">Ajouter un fournisseur
-                                </span></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <h5 class="modal-title justify-content-beetween"
+                                id="fournisseurModalLabel"><i class="ml-2 fas fa-users"></i><span
+                                    class="badge badge-pill badge-info text-center bg-indigo text-center mx-2 p-2">Ajouter un
+                                    fournisseur </span></h5>
+                            <button type="button"class="close" data-dismiss="modal"  aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -288,40 +290,47 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Nom fournisseur">
+                                <input type="text" name="name"id="name"class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Nom fournisseur"  data-parsley-minlength="3">
+                                <span id="nameErrorFournisseur" class="text-danger"></span>
+
                                 @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
-                                </div>
-                                <input type="text" name="address" class="form-control" placeholder="Adresse">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" name="phone" class="form-control" placeholder="+224 620-82-38-77">
+                                <input type="text"name="phone"id="phone" class="form-control"  data-parsley-minlength="8">
+                                <span id="phoneError" class="text-danger"></span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                </div>
+                                <input type="text" name="address"  class="form-control"  id="address"  
+                                    placeholder="Adresse" >
+                                <span id="addressError" class="text-danger"></span>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                <input type="email" name="email" class="form-control" placeholder="Email">
+                                <input type="email"  name="email" id="email" class="form-control" placeholder="Email"
+                                data-parsley-trigger="keypress">
+                                <span id="emailError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-danger"  data-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-primary bg-indigo"><i class="fas fa-save mx-1"></i>Enregistrer</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        {{-- /.Fournisseur Modal --}}
+        {{-- END ADD FOURNISSEUR MODAL --}}
     </div>
 
 @endsection
@@ -359,162 +368,401 @@
                 format: 'L'
             });
             //Initialize Select2 Elements
-            $('.select2').select2();
+            // $('.select2').select2();
 
-            let button = document.getElementById('addProduct');
-
-            $('#addProduct').click(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("addProduct")}}',
-                    data: {
-                        '_token': $('input[name=_token]').val(),
-                        'produit_id': $('input[name=produit_id]').val(),
-                        'qtt': $('input[name=qtt]').val(),
-                        'pa': $('input[name=pa]').val(),
-                        'pv': $('input[name=pv]').val(),
-                        'mtt': $('input[name=mtt]').val(),
-
-                    },
-
-                    success: function(data) {
-                        if((data.errors)) {
-                            console.log("Erreur " + this.errors);
-                        } else {
-                            $('#table').append(
-                                "<tr class='addProduit'>" +
-                                    "<td> + data.produit_id + </td>" + 
-                                    "<td> + data.qtt + </td>" + 
-                                    "<td> + data.pa + </td>" + 
-                                    "<td> + data.pv + </td>" + 
-                                    "<td> + data.mtt + </td>" + 
-                                "</tr>"
-                            );
-                        }
-                    }
-                });
-            });
-
-            // $('#example6').Tabledit({
-            //     url: 'example.php',
-            //     columns: {
-            //         identifier: [0, 'id'],
-            //         editable: [[1, 'no'], [2, 'produit'], [3, 'avatar', '{"1": "Black Widow", "2": "Captain America", "3": "Iron Man"}']]
-            //     },
-            //     onDraw: function() {
-            //         console.log('onDraw()');
-            //     },
-            //     onSuccess: function(data, textStatus, jqXHR) {
-            //         console.log('onSuccess(data, textStatus, jqXHR)');
-            //         console.log(data);
-            //         console.log(textStatus);
-            //         console.log(jqXHR);
-            //     },
-            //     onFail: function(jqXHR, textStatus, errorThrown) {
-            //         console.log('onFail(jqXHR, textStatus, errorThrown)');
-            //         console.log(jqXHR);
-            //         console.log(textStatus);
-            //         console.log(errorThrown);
-            //     },
-            //     onAlways: function() {
-            //         console.log('onAlways()');
-            //     },
-            //     onAjax: function(action, serialize) {
-            //         console.log('onAjax(action, serialize)');
-            //         console.log(action);
-            //         console.log(serialize);
-            //     }
-            // });
-        // $("#jsGrid").jsGrid({
-        //     height: "70%",
-        //     width: "100%",
-        //     filtering: true,
-        //     editing: true,
-        //     inserting: true,
-        //     sorting: true,
-        //     paging: true,
-        //     autoload: true,
-        //     pageSize: 15,
-        //     pageButtonCount: 5,
-        //     pageLoading: true,
-        //     deleteConfirm: "Do you really want to delete the client?",
-        //     // controller: db,
-        //     controller: {
-        //         loadData: function (filter) {
-        //             $.ajax({
-        //                 type: "GET",
-        //                 url: '{{ route("achat.index")}}',
-        //                 data: filter,
-        //                 dataType: "JSON"
-        //             });
-        //         }
-        //     },
-        //     fields: [
-        //         { name: "Désignation", type: "text", width: 150, validate: "required" },
-        //         { name: "Quantité", type: "number", width: 100, validate: { validator: "range", param: [18, 80] } },
-        //         { name: "Prix Achat", type: "text", width: 200, validate: { validator: "rangeLength", param: [10, 250] } },
-        //         { name: "Prix Vente", type: "text", width: 200, validate: { validator: "rangeLength", param: [10, 250] } },
-        //         { name: "Montant", type: "text", width: 200, validate: { validator: "rangeLength", param: [10, 250] } },
-        //         { type: "control" }
-        //     ]
-
-        // });        
         });
-
     </script>
-    {{-- <script>
-        var clients = [
-            { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-            { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-            { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-            { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-            { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-        ];
+<script>
+    $('#uniteModal').click(function() {
+        $('#UniteError').html('');
+    });
     
-        var countries = [
-            { Name: "", Id: 0 },
-            { Name: "United States", Id: 1 },
-            { Name: "Canada", Id: 2 },
-            { Name: "United Kingdom", Id: 3 }
-        ];
-    
-        $("#jsGrid").jsGrid({
-            width: "100%",
-            height: "400px",
-    
-            inserting: true,
-            editing: true,
-            sorting: true,
-            paging: true,
-    
-            data: clients,
-    
-            fields: [
-                { name: "Name", type: "text", width: 150, validate: "required" },
-                { name: "Age", type: "number", width: 50 },
-                { name: "Address", type: "text", width: 200 },
-                { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-                { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
-                { type: "control" }
-            ]
-        });
-    </script> --}}
+    $('#categorieModal').click(function() {
+        $('#categorieError').html('');
+    });
 
-    {{-- <script>
-            
-        function localStorageIsAvailable()
-        {
-            try {
-                return 'localStorage' in window && window['localStorage'] !== null;
-            }catch(e) {
-                return false;
+    $('#familleModal').click(function() {
+        $('#familleError').html('');
+    });
+
+   
+    function getAllProducts() {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('product.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {
+                    data = data + '<tr id="pid(' + value.id + ')">'
+                        data = data + "<th scope='row'>" + value.id + "</>"
+                        data = data + "<td>" + value.produit + "</td>"
+                        data = data + "<td>" + value.option.name + "</td>"
+                        data = data + "<td>" + value.categorie.categorieName + "</td>"
+                        data = data + "<td>" + value.famille.familleName + "</td>"
+                        data = data + "<td>" + value.date_production + "</td>"
+                        data = data + "<td>" + value.date_peremption + "</td>"
+                        data = data + '<td class="text-right py-0 px-2 align-middle action">'
+                        // data = data + '<div class="btn-group btn-group-sm">'
+                        data = data +
+                            '<a href="javascript:void(0)" role="button" class="btn btn-primary btn-xs showProduct" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"data-toggle="tooltip" data-placement="top" title="Voir"></i></a>'
+                        data = data +
+                            '<a href="javascript:void(0)" role="button" class="btn btn-info btn-xs editProduct" data-bs-toggle="modal" data-bs-target="#ProductEditModal" data-bs-whatever="@fat"onclick="editProduct(' +
+                            value.id +
+                            ')"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top"title="Modifier"></i>'
+                        data = data +
+                            '<a href="javascript:void(0)" role="button" class="btn btn-danger btn-xs deleteProduct" data-method="DELETE"  data-confirm="Etes-vous sûr" onclick="deleteProduct(' +
+                            value.id +
+                            ')"><i class="fas fa-trash"  data-toggle="tooltip" data-placement="left" title="Supprimer"></i></a>'
+                        // data = data + '</div>'
+                        data = data + "</td>"
+                    data = data + "</tr>"
+
+                });
+                $('table #row').html(data);
             }
+        });
+    }
+    getAllProducts();
 
-            let token = '{{ Session::token() }}';
-            let url = '{{ route('achat.store') }}';
-            let records = {};
-            let $table = $('table');
-        }
-    </script> --}}
 
+    
+    function getAllCategories(){
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('categorie.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {                 
+                    data = data + '<select class="form-control select2"  id="category" style="width: 100%;" name="categorie">'
+                        data = data + "<option value="+value.id+">" + value.categorieName + "</option>"
+                    data = data + "</select>"
+                });
+                $('#category').html(data);
+            }
+        });
+    
+    }
+
+    function getAllFamilles(){
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('familles.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {                 
+                    data = data + '<select class="form-control select2"  id="familly" style="width: 100%;" name="famille">'
+                        data = data + "<option value="+value.id+">" + value.familleName + "</option>"
+                    data = data + "</select>"
+                });
+                $('#familly').html(data);
+            }
+        });
+    }
+
+    function getAllUnites(){
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('unite.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {                 
+                    data = data + '<select class="form-control select2"  id="unity" style="width: 100%;" name="unite">'
+                        data = data + "<option value="+value.id+">" + value.name + "</option>"
+                    data = data + "</select>"
+                });
+                $('#unity').html(data);
+            }
+        });
+    }
+
+
+    
+    $('#UniteForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $('#UniteForm')[0].reset();
+                $('#uniteModal').modal('hide');
+                getAllProducts();
+            },
+            error: function(error) {
+                $('#UniteError').text(error.responseJSON.errors.unite);
+            }
+        });
+    });
+
+   
+
+    $('#categorieForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $('#categorieForm')[0].reset();
+                $('#categorieModal').modal('hide');
+                getAllProducts();
+            },
+            error: function(error)  {
+                $('#categorieError').text(error.responseJSON.errors.categorie);
+            }
+        });
+    });
+
+
+    $('#familleForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $('#familleForm')[0].reset();
+                $('#familleModal').modal('hide');
+                getAllProducts();
+            },
+            error: function(error) {
+                $('#familleError').text(error.responseJSON.errors.famille);
+            }
+        });
+    });
+   
+    function buttonProductModal() {
+        getAllUnites();
+        getAllCategories();
+        getAllFamilles();
+
+    }
+
+    $('#addProductModal').click(function() {
+        $('#nameErrorProduit').html('');
+        $('#uniteError').html('');
+        $('#categorieError').html('');
+        $('#familleError').html('');
+        $('#dateProdError').html('');
+        $('#dateExpError').html('');   
+        $('#descripExpError').html('');
+    });
+
+
+
+    $('#addProduitForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $('#addProduitForm')[0].reset();
+                $('#addProductModal').modal('hide');
+                // getAllProducts();            
+            },
+            error: function(error) {
+                $('#nameErrorProduit').text(error.responseJSON.errors.produit);
+                $('#uniteError').text(error.responseJSON.errors.unite);
+                $('#categorieError').text(error.responseJSON.errors.categorie);
+                $('#familleError').text(error.responseJSON.errors.famille);
+                $('#dateProdError').text(error.responseJSON.errors.date_production);
+                $('#dateExpError').text(error.responseJSON.errors.date_peremption);
+                $('#descripExpError').text(error.responseJSON.errors.description);
+                              
+            }
+        });
+    });
+</script>
+<script>
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // });
+
+    $('#fournisseurModal').click(function() {
+        $('#nameErrorFournisseur').html('');
+        $('#phoneError').html('');
+        $('#addressError').html('');
+        $('#emailError').html('');
+    });
+
+    function getAllFournisseur() {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "@route('fournisseur.all')",
+            success: function(response) {
+                let data = "";
+                $.each(response, function(key, value) {
+                    if (value.address === null) {
+                        value.address = "Pas d'adresse"
+                    }
+                    if (value.email === null) {
+                        value.email = 'Fournisseur@gmail.com'
+                    }
+                    data = data + '<tr id="fid(' + value.id + ')">'
+                    data = data + "<th scope='row'>" + value.id + "</th>"
+                    data = data + "<td>" + value.name + "</td>"
+                    data = data + "<td>" + value.email + "</td>"
+                    data = data + "<td>" + value.phone + "</td>"
+                    data = data + "<td>" + value.address + "</td>"
+                    data = data + '<td class="text-right py-0 align-middle action">'
+                    data = data + '<div class="btn-group btn-group-sm">'
+                    data = data +
+                        '<a href="javascript:void(0)" role="button" class="btn btn-primary btn-xs showFournisseur" data-toggle="modal" data-target=".bs-show-modal-lg"><i class="fa fa-folder-open"data-toggle="tooltip" data-placement="top" title="Voir"></i></a>'
+                    data = data +
+                        '<a href="javascript:void(0)" role="button" class="btn btn-info btn-xs editFournisseur" data-bs-toggle="modal" data-bs-target="#fournisseurEditModal" data-bs-whatever="@fat"onclick="editFournisseur(' +
+                        value.id +
+                        ')"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top"title="Modifier"></i>'
+                    data = data +
+                        '<a href="javascript:void(0)" role="button" class="btn btn-danger btn-xs deleteFournisseur" data-method="DELETE"  data-confirm="Etes-vous sûr" onclick="deleteFournisseur(' +
+                        value.id +
+                        ')"><i class="fas fa-trash"  data-toggle="tooltip" data-placement="left" title="Supprimer"></i></a>'
+                    data = data + '</div>'
+                    data = data + "</td>"
+                    data = data + "</tr>"
+
+                });
+                $('#row').html(data);
+            }
+        });
+    }
+
+    getAllFournisseur();
+
+    $('#fournisseurForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            dataType: "json",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response) {
+                    if (response.address === null) {
+                        response.address = "Pas d'adresse"
+                    }
+                    if (response.email === null) {
+                        response.email = 'Fournisseur@gmail.com'
+                    }
+
+                    $('#fournisseurForm')[0].reset();
+                    $('#fournisseurModal').modal('hide');
+                    // getAllFournisseur();
+                }
+            },
+            error: function(error) {
+                $('#nameErrorFournisseur').text(error.responseJSON.errors.name);
+                $('#phoneError').text(error.responseJSON.errors.phone);
+                $('#addressError').text(error.responseJSON.errors.address);
+                $('#emailError').text(error.responseJSON.errors.email);
+
+            }
+        });
+    });
+
+    // function editFournisseur(id) {
+    //     $.get("@route('fournisseur.index')/" + id + '/edit', function(fournisseur) {
+    //         $('#id').val(fournisseur.id);
+    //         $('#nameEdit').val(fournisseur.name);
+    //         $('#emailEdit').val(fournisseur.email);
+    //         $('#phoneEdit').val(fournisseur.phone);
+    //         $('#addressEdit').val(fournisseur.address);
+
+    //         $('#nameEditError').html('');
+    //         $('#phoneEditError').html('');
+    //         $('#addressEditError').html('');
+    //         $('#emailEditError').html('');
+
+    //         $('#fournisseurEditModal').modal('toggle');
+    //     });
+    // }
+
+    // $('#fournisseurEditForm').submit(function(e) {
+    //     e.preventDefault();
+
+    //     let id = $('#id').val();
+    //     let name = $('#nameEdit').val();
+    //     let email = $('#emailEdit').val();
+    //     let phone = $('#phoneEdit').val();
+    //     let address = $('#addressEdit').val();
+
+    //     $.ajax({
+    //         type: "PUT",
+    //         dataType: "json",
+    //         url: "@route('fournisseur.index')/" + id,
+    //         data: {
+    //             _token: "{{ Session::token() }}",
+    //             id: id,
+    //             name: name,
+    //             email: email,
+    //             phone: phone,
+    //             address: address,
+    //         },
+    //         success: function(response) {
+    //             $('#fid' + response.id + 'td:nth-child(1)').text(response.name);
+    //             $('#fid' + response.id + 'td:nth-child(2)').text(response.email);
+    //             $('#fid' + response.id + 'td:nth-child(3)').text(response.phone);
+    //             $('#fid' + response.id + 'td:nth-child(4)').text(response.address);
+
+    //             $('#fournisseurEditForm')[0].reset();
+    //             $('#nameEditError').html('');
+    //             $('#phoneEditError').html('');
+    //             $('#addressEditError').html('');
+    //             $('#emailEditError').html('');
+    //             $('#fournisseurEditModal').modal('toggle');
+    //             getAllFournisseur();
+    //         },
+    //         error: function(error) {
+    //             $('#nameEditError').text(error.responseJSON.errors.name);
+    //             $('#phoneEditError').text(error.responseJSON.errors.phone);
+    //             $('#emailEditError').text(error.responseJSON.errors.email);
+    //             $('#addressEditError').text(error.responseJSON.errors.address);
+    //         }
+
+    //     });
+    // })
+
+    // function deleteFournisseur(id) {
+    //     if (confirm("Etes-vous sur de supprimer ce fournisseur")) {
+    //         $.ajax({
+    //             type: "DELETE",
+    //             url: "@route('fournisseur.index')/" + id,
+    //             data: {
+    //                 _token: "{{ Session::token() }}"
+    //             },
+    //             success: function() {
+    //                 $('#fid').remove();
+    //                 getAllFournisseur();
+
+    //             }
+    //         });
+    //     }
+    // }
+</script>
 @endpush

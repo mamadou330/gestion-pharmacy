@@ -108,7 +108,7 @@
                                 <span class="input-group-text">@</span>
                             </div>
                             <input type="text" name="name"id="name"class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Nom fournisseur" required data-parsley-minlength="3">
+                                placeholder="Nom fournisseur"  data-parsley-minlength="3">
                             <span id="nameError" class="text-danger"></span>
 
                             @error('name')
@@ -119,7 +119,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text"name="phone"id="phone" class="form-control" required data-parsley-minlength="8">
+                            <input type="text"name="phone"id="phone" class="form-control"  data-parsley-minlength="8">
                             <span id="phoneError" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
